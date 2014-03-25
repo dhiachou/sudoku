@@ -26,6 +26,7 @@ Arena create(Vector size);
   *	@param size : a vector containing the number of lines and columns
  *
  *	the first parameter will be modified to become filled
+ * TODO: write the fill_arena function
  */
 void fill_arena(Arena* a);
 
@@ -36,6 +37,7 @@ void fill_arena(Arena* a);
  *	@param c : column count
  *
  *	returns the ready arena
+ *	TODO : write the function that allows to create a ready arena
  */
 Arena ready_arena(Arena a);
 
@@ -44,24 +46,41 @@ Arena ready_arena(Arena a);
  *  @param a : Arena
  *  @param l : lines count
  *  @param c : column count
+ *  TODO : make this function with SDL2
  */
 void display_arena(Arena a);
 
 /**
  *
  */
-//void game(.../*TO DO */);
+//void game(.../*TODO */);
 
 /**
+ * Saves actual progress into a file
+ * Returns true if file correctly written
+ * @param a : The actual arena
+ * @param solution : The solution arena
  *
+ * TODO : write the save function
  */
 Boolean save(Arena a, Arena solution);
 
 /**
+ * Loads actual progress from a file
+ * Returns true if file correctly loaded
+ * @param a : Pointer to the actual arena
+ * @param solution : Pointer to the solution arena
  *
+ *	TODO : write the load function
  */
 Boolean load(Arena* a, Arena* solution);
 
+/**
+ * Verifies whether the actual arena is a solution to the game
+ * Returns true if it is a solution
+ * @param a : the actual arena
+ * TODO : write this function
+ */
 Boolean verify_result(Arena a);
 
 

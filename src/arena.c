@@ -26,8 +26,6 @@ Arena create(Vector size){
 		A.Arena[i] = (Field*)malloc(sizeof(Field)*A.size.c);
 	}
 
-
-
 	//Initializing each field
 	for (i =0; i<A.size.l;i++){
 		for (j=0; j<A.size.c; j++){
@@ -53,7 +51,7 @@ void display_arena(Arena a){
 	//printf ("Entered display_arena");
 	for (i=0;i<a.size.l;i++){
 		for (j=0;j<a.size.c;j++){
-			printf("___")	;
+			printf("===")	;
 		}
 		printf("\n");
 		for (j=0;j<a.size.c;j++){
@@ -63,6 +61,4 @@ void display_arena(Arena a){
 		printf("\n");
 
 	}
-
-
 }
