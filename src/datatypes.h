@@ -15,8 +15,8 @@ typedef struct Coordinates {
 
 typedef enum Boolean
 {
-	Faux,
-	Vrai
+	False,
+	True
 } Boolean;
 
 //If Field.val == 0 then the field is empty
