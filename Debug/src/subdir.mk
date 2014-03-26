@@ -5,15 +5,21 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/arena.c \
-../src/main.c 
+../src/lib.c \
+../src/main.c \
+../src/save_load.c 
 
 OBJS += \
 ./src/arena.o \
-./src/main.o 
+./src/lib.o \
+./src/main.o \
+./src/save_load.o 
 
 C_DEPS += \
 ./src/arena.d \
-./src/main.d 
+./src/lib.d \
+./src/main.d \
+./src/save_load.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
