@@ -12,8 +12,6 @@
 #include <math.h>
 
 
-//This should work properly
-//TODO : Test this function
 Boolean load(Arena* a, Arena* solution){
 	Boolean exit_status = True;
 	int i=0, j=0;
@@ -51,7 +49,7 @@ Boolean load(Arena* a, Arena* solution){
 	return exit_status;
 }
 
-//this should work TODO : test it!
+
 Boolean save(Arena a, Arena solution){
 	Boolean exit_status = True;
 	FILE* fout = NULL;
