@@ -13,8 +13,9 @@
 
 int main() {
 	Vector size;
-	Arena a ;
+	Arena a , sol;
 
+	/*//Testing create function
 	printf("Enter size :");
 	scanf("%d",&size.c);
 	scanf("%d",&size.l);
@@ -23,6 +24,21 @@ int main() {
 	a = create(size);
 
 	display_arena(a);
+	//testing save function :
+	save(a,a);
+
+	//*/
+
+
+
+	//Testing load function
+	load(&a,&sol);
+
+	display_arena(a);
+
+	printf("\n\nSolution: \n");
+
+	display_arena(sol); //*/
 
 
 	return 0;

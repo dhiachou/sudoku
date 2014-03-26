@@ -9,6 +9,7 @@
 #include <stdio.h>
 
 #include "interface.h"
+#include <math.h>
 
 
 //This should work properly
@@ -30,13 +31,13 @@ Boolean load(Arena* a, Arena* solution){
 
 	if(NULL!=fin){	//file opened correctly
 		//reading fields' properties
-		for ( i=0 ; i<sqr(a->size->l) ; i++){
-			for ( j=0 ; j<sqr(a->size->c) ; j++){
+		for ( i=0 ; i<a->size.l ; i++){
+			for ( j=0 ; j<a->size.c ; j++){
 				fscanf(fin, "%d", a->Arena[i][j].val);
 			}
 		}
-		for ( i=0 ; i<sqr(solution->size->l) ; i++){
-			for ( j=0 ; j<sqr(solution->size->c) ; j++){
+		for ( i=0 ; i<solution->size.l ; i++){
+			for ( j=0 ; j<solution->size.c ; j++){
 				fscanf(fin, "%d", solution->Arena[i][j].val);
 			}
 		}
@@ -57,17 +58,20 @@ Boolean save(Arena a, Arena solution){
 	fout = fopen("game","w"); //Opening file for writing
 	int i = 0, j = 0;
 
+	printf("File opened\n");
+
 	if(NULL!=fout){
-		fprintf(fout,"%d %d\n", a.size.c , a.size.l);	//saving arena's dimensions
+
+		fprintf(fout,"%d %d\n", (int)sqrt(a.size.c) , (int)sqrt(a.size.l));	//saving arena's dimensions
 		//writing each fields property on a new line
-		for(i=0; i<sqr(a.size.l); i++){			// each line of the actual arena
-			for (j=0 ;j<sqr(a.size.c) ; j++){ 	//each field
+		for(i=0; i<a.size.l; i++){			// each line of the actual arena
+			for (j=0 ;j<a.size.c; j++){ 	//each field
 				fprintf(fout, "%d ",*(a.Arena[i][j].val));// saving the value
 			}
 			fprintf(fout,"\n");
 		}
-		for(i=0; i<sqr(a.size.l); i++){			// each line of the actual arena
-			for (j=0 ;j<sqr(a.size.c) ; j++){ 	//each field
+		for(i=0; i<a.size.l; i++){			// each line of the actual arena
+			for (j=0 ;j<a.size.c ; j++){ 	//each field
 				fprintf(fout, "%d ",*(solution.Arena[i][j].val));// saving the value
 			}
 			fprintf(fout,"\n");
