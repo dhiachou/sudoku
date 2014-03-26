@@ -42,6 +42,7 @@ Boolean load(Arena* a, Arena* solution){
 		}
 	}
 	else {
+		fprintf(stderr,"Can't open file in read mode");
 		exit_status = False;
 	}
 
@@ -73,7 +74,7 @@ Boolean save(Arena a, Arena solution){
 		}
 	}
 	else{
-		printf("Can't open file in write mode");
+		fprintf(stderr,"Can't open file in write mode");
 		exit_status=False;
 	}
 
