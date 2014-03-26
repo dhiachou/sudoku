@@ -13,7 +13,7 @@
 #include "datatypes.h"
 
 /**
- *	Creates an Arena with the l lines and c columns
+ *	Creates an Arena with l lines and c columns
  *	@param size : a vector containing the number of lines and columns
  *
  *	returns the newly created arena
@@ -83,5 +83,10 @@ Boolean load(Arena* a, Arena* solution);
  */
 Boolean verify_result(Arena a);
 
+/**
+ * returns the square of i
+ * @param i : an integer number of which we'll return the square
+ */
+inline int sqr (int i);
 
 #endif /* INTERFACE_H_ */

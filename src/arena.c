@@ -21,6 +21,7 @@ Arena create(Vector size){
 	A.size.l = sqr(size.l);
 	A.size.c = sqr(size.c);
 
+
 	A.Arena = (Field**)malloc(sizeof (Field*)*A.size.l);
 	for (i =0 ; i< A.size.l;i++){
 		A.Arena[i] = (Field*)malloc(sizeof(Field)*A.size.c);
