@@ -18,8 +18,8 @@ Arena create(Vector size){
 	int i=0, j=0;
 
 	//Creating an empty arena with global dimensions : size.l² * size.c²
-	A.size.l = size.l*size.l;
-	A.size.c = size.c*size.c;
+	A.size.l = sqr(size.l);
+	A.size.c = sqr(size.c);
 
 	A.Arena = (Field**)malloc(sizeof (Field*)*A.size.l);
 	for (i =0 ; i< A.size.l;i++){
