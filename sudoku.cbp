@@ -31,7 +31,18 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="src/arena.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/datatypes.h" />
+		<Unit filename="src/interface.h" />
+		<Unit filename="src/lib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/save_load.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
