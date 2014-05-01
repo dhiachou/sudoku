@@ -23,7 +23,7 @@ Arena create(Vector size);
 /**
  *  Fills the empty arena a with random numbers from 1 to l*c
  *  @param a : a pointer to an empty Arena
-  *	@param size : a vector containing the number of lines and columns
+ *	@param size : a vector containing the number of lines and columns
  *
  *	the first parameter will be modified to become filled
  * TODO: write the fill_arena function
