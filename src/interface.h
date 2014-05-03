@@ -28,7 +28,7 @@ Arena create(Vector size);
  *	the first parameter will be modified to become filled
  * TODO: write the fill_arena function
  */
-void fill_arena(Arena* a);
+void fill_arena(Arena* a,int numero);
 
 /**
  *  Generates a ready to play arena from a filled arena
@@ -53,7 +53,7 @@ void display_arena(Arena a);
 /**
  *
  */
-//void game(.../*TODO */);
+/*void game(...TODO )*/
 
 /**
  * Saves actual progress into a file
@@ -87,6 +87,6 @@ Boolean verify_result(Arena a);
  * returns the square of i
  * @param i : an integer number of which we'll return the square
  */
-inline int sqr (int i);
+
 
 #endif /* INTERFACE_H_ */

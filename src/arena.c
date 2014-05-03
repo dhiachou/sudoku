@@ -17,7 +17,7 @@ Arena create(Vector size){
 	Arena A;
 	int i=0, j=0;
 
-	//Creating an empty arena with global dimensions : size.l² * size.c²
+	/*Creating an empty arena with global dimensions : size.l² * size.c²*/
 	A.size.l = sqr(size.l);
 	A.size.c = sqr(size.c);
 
@@ -27,18 +27,18 @@ Arena create(Vector size){
 		A.Arena[i] = (Field*)malloc(sizeof(Field)*A.size.c);
 	}
 
-	//Initializing each field
+	/*Initializing each field*/
 	for (i =0; i<A.size.l;i++){
 		for (j=0; j<A.size.c; j++){
-			//Allocating the value
+			/*Allocating the value*/
 			A.Arena[i][j].val = (int*)malloc(sizeof(int));
 			*(A.Arena[i][j].val) = 0;
 
-			//Affecting the coordinates of the field
+			/*Affecting the coordinates of the field*/
 			A.Arena[i][j].line = i;
 			A.Arena[i][j].column = j;
 
-			//Affecting the number of the square where the field is
+			/*Affecting the number of the square where the field is*/
 			A.Arena[i][j].square.x = (short)i/size.l;
 			A.Arena[i][j].square.y = (short)j/size.c;
 		}
@@ -49,7 +49,7 @@ Arena create(Vector size){
 
 void display_arena(Arena a){
 	int i,j=0;
-	//printf ("Entered display_arena");
+	/*printf ("Entered display_arena");*/
 	for (i=0;i<a.size.l;i++){
 		for (j=0;j<a.size.c;j++){
 			printf("===")	;
@@ -65,9 +65,9 @@ void display_arena(Arena a){
 }
 
 
-Boolean verifier( Field k, Arena A ){
+Boolean verifier(Field k, Arena A ){
     int i=0, j=0;
-    //verification sur les colonnes
+    /*verification sur les colonnes*/
     for (i=0 ; i< A.size.c ; i++){
         if (A.Arena[k.line][i].val == k.val && i != k.column) {
             return False ;
@@ -82,7 +82,7 @@ Boolean verifier( Field k, Arena A ){
 
     for (i = k.square.x * sqrt(A.size.l) ; i< (k.square.x+1)* sqrt(A.size.l); i++){
         for (j=k.square.y * sqrt(A.size.c) ; j< (k.square.y+1)* sqrt(A.size.c); j++){
-            if ( (A.Arena[i][j] == k.val) && (i != k.line) && ( j != k.column))
+            if ( (A.Arena[i][j].val== k.val) && (i != k.line) && ( j != k.column))
                 return False;
         }
     }
@@ -91,13 +91,29 @@ Boolean verifier( Field k, Arena A ){
     return True;
 
 }
-void fill_arena(Arena*A)
- int cl,column=0,row=0;
+
+int nbre_aleatoire(int n)
+{
+    srand(time(NULL));
+    return rand()% n ;
+}
+void fill_arena(Arena*A,int numero)
+ {
+
+     int c,cl,column=0,row=0;
 
     FILE* fichier=NULL;
-    fichier = fopen("grillefacile.txt","r");
+    fichier = fopen("ressources/easy","r");
 
     row=0;
+    /*boucle pour mettre le curseur dans la bonne position */
+    while (numero >1)
+    {
+        c=fgetc(fichier);
+        if (c=='\n')
+            numero--;
+    }
+
     do {
         cl=(fgetc(fichier));
 
@@ -105,7 +121,7 @@ void fill_arena(Arena*A)
 
             *(A->Arena[row][column].val)=0;
         }
-        else if (cl<'9' && cl > '0'){
+        else if (cl<='9' && cl > '0'){
 
             *(A->Arena[row][column].val)=cl-'0';
         }
@@ -122,5 +138,6 @@ void fill_arena(Arena*A)
         }
 
     }while (cl!='\n' && row!=A->size.l);
+    printf ("\n");
 }
 

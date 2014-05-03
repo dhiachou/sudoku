@@ -19,7 +19,7 @@ typedef enum Boolean
 	True
 } Boolean;
 
-//If Field.val == 0 then the field is empty
+/*If Field.val == 0 then the field is empty*/
 typedef struct Field {
 	int* val;
 	Coordinates square;
