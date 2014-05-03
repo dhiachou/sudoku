@@ -33,10 +33,10 @@ typedef struct Vector {
 } Vector;
 
 
-typedef struct Arena {
-	Field** Arena;
+typedef struct Grid {
+	Field** Grid;
 	Vector size;
-}Arena ;
+}Grid ;
 
 
 

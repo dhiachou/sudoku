@@ -13,42 +13,42 @@
 #include "datatypes.h"
 
 /**
- *	Creates an Arena with l lines and c columns
+ *	Creates an Grid with l lines and c columns
  *	@param size : a vector containing the number of lines and columns
  *
- *	returns the newly created arena
+ *	returns the newly created grid
  */
-Arena create(Vector size);
+Grid create(Vector size);
 
 /**
- *  Fills the empty arena a with random numbers from 1 to l*c
- *  @param a : a pointer to an empty Arena
+ *  Fills the empty grid a with random numbers from 1 to l*c
+ *  @param a : a pointer to an empty Grid
  *	@param size : a vector containing the number of lines and columns
  *
  *	the first parameter will be modified to become filled
- * TODO: write the fill_arena function
+ * TODO: write the fill_grid function
  */
-void fill_arena(Arena* a,int numero);
+void fill_grid(Grid* a,int numero);
 
 /**
- *  Generates a ready to play arena from a filled arena
- *  @param a : a filled Arena
+ *  Generates a ready to play grid from a filled grid
+ *  @param a : a filled Grid
  *	@param l : lines count
  *	@param c : column count
  *
- *	returns the ready arena
- *	TODO : write the function that allows to create a ready arena
+ *	returns the ready grid
+ *	TODO : write the function that allows to create a ready grid
  */
-Arena ready_arena(Arena a);
+Grid ready_grid(Grid a);
 
 /**
- *  Displays the current arena
- *  @param a : Arena
+ *  Displays the current grid
+ *  @param a : Grid
  *  @param l : lines count
  *  @param c : column count
  *  TODO : make this function with SDL2
  */
-void display_arena(Arena a);
+void display_grid(Grid a);
 
 /**
  *
@@ -58,30 +58,30 @@ void display_arena(Arena a);
 /**
  * Saves actual progress into a file
  * Returns true if file correctly written
- * @param a : The actual arena
- * @param solution : The solution arena
+ * @param a : The actual grid
+ * @param solution : The solution grid
  *
  * TODO : write the save function
  */
-Boolean save(Arena a, Arena solution);
+Boolean save(Grid a, Grid solution);
 
 /**
  * Loads actual progress from a file
  * Returns true if file correctly loaded
- * @param a : Pointer to the actual arena
- * @param solution : Pointer to the solution arena
+ * @param a : Pointer to the actual grid
+ * @param solution : Pointer to the solution grid
  *
  *	TODO : write the load function
  */
-Boolean load(Arena* a, Arena* solution);
+Boolean load(Grid* a, Grid* solution);
 
 /**
- * Verifies whether the actual arena is a solution to the game
+ * Verifies whether the actual grid is a solution to the game
  * Returns true if it is a solution
- * @param a : the actual arena
+ * @param a : the actual grid
  * TODO : write this function
  */
-Boolean verify_result(Arena a);
+Boolean verify_result(Grid a);
 
 /**
  * returns the square of i

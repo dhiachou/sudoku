@@ -12,7 +12,7 @@
 #include <math.h>
 
 
-Boolean load(Arena* a, Arena* solution){
+Boolean load(Grid* a, Grid* solution){
 	Boolean exit_status = True;
 	int i=0, j=0;
 	Vector size ;
@@ -20,10 +20,10 @@ Boolean load(Arena* a, Arena* solution){
 
 	fin = fopen("game","r"); /*Opening file*/
 
-	/*getting game arena's dimension */
+	/*getting game grid's dimension */
 	fscanf(fin, "%d %d", &size.c,&size.l);
 
-	/*creating the imported arenas with the correct size */
+	/*creating the imported grids with the correct size */
 	*a = create(size);
 	*solution = create(size);
 
@@ -31,12 +31,12 @@ Boolean load(Arena* a, Arena* solution){
 		/*reading fields' properties*/
 		for ( i=0 ; i<a->size.l ; i++){
 			for ( j=0 ; j<a->size.c ; j++){
-				fscanf(fin, "%d", a->Arena[i][j].val);
+				fscanf(fin, "%d", a->Grid[i][j].val);
 			}
 		}
 		for ( i=0 ; i<solution->size.l ; i++){
 			for ( j=0 ; j<solution->size.c ; j++){
-				fscanf(fin, "%d", solution->Arena[i][j].val);
+				fscanf(fin, "%d", solution->Grid[i][j].val);
 			}
 		}
 	}
@@ -50,7 +50,7 @@ Boolean load(Arena* a, Arena* solution){
 }
 
 
-Boolean save(Arena a, Arena solution){
+Boolean save(Grid a, Grid solution){
 	Boolean exit_status = True;
 	FILE* fout = NULL;
 	int i = 0, j = 0;
@@ -61,17 +61,17 @@ Boolean save(Arena a, Arena solution){
 
 	if(NULL!=fout){
 
-		fprintf(fout,"%d %d\n", (int)sqrt(a.size.c) , (int)sqrt(a.size.l));	/*saving arena's dimensions*/
+		fprintf(fout,"%d %d\n", (int)sqrt(a.size.c) , (int)sqrt(a.size.l));	/*saving grid's dimensions*/
 		/*writing each fields property on a new line */
-		for(i=0; i<a.size.l; i++){			/* each line of the actual arena */
+		for(i=0; i<a.size.l; i++){			/* each line of the actual grid */
 			for (j=0 ;j<a.size.c; j++){ 	/*each field*/
-				fprintf(fout, "%d ",*(a.Arena[i][j].val));/* saving the value */
+				fprintf(fout, "%d ",*(a.Grid[i][j].val));/* saving the value */
 			}
 			fprintf(fout,"\n");
 		}
-		for(i=0; i<a.size.l; i++){			/* each line of the actual arena */
+		for(i=0; i<a.size.l; i++){			/* each line of the actual grid */
 			for (j=0 ;j<a.size.c ; j++){ 	/*each field*/
-				fprintf(fout, "%d ",*(solution.Arena[i][j].val));/* saving the value */
+				fprintf(fout, "%d ",*(solution.Grid[i][j].val));/* saving the value */
 			}
 			fprintf(fout,"\n");
 		}

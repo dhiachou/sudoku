@@ -3,7 +3,7 @@
 // Author      : Dhaw - Salmouch - Dandoun - Nini
 // Version     :
 // Copyright   : All rights reserved to II1G
-// Description : Hello World in C++, Ansi-style
+// Description : The sudoku project
 //============================================================================
 
 #include <stdio.h>
@@ -13,7 +13,7 @@
 
 int main() {
 	Vector size;
-	Arena a , sol;
+	Grid a , sol;
 
 	/*Testing create function
 	printf("Enter size :");
@@ -22,7 +22,7 @@ int main() {
 
 	a = create(size);
 
-	display_arena(a);
+	display_grid(a);
 
 	//*/
 
@@ -32,15 +32,15 @@ int main() {
 	/*Testing load function:
 	load(&a,&sol);
 
-	display_arena(a);
+	display_grid(a);
 
 	printf("\n\nSolution: \n");
 
-	display_arena(sol);
+	display_grid(sol);
 	//*/
 
 
-	//*Testing filling arena function:
+	//*Testing filling grid function:
 	printf("Enter size :");
 	scanf("%d",&size.c);
 	scanf("%d",&size.l);
@@ -48,12 +48,12 @@ int main() {
 	a = create(size);
 
     init_randomizer(); //shall be done only once!!
-    fill_arena(&a,randomize(20));
+    fill_grid(&a,randomize(20));
 
-    display_arena(a);
+    display_grid(a);
 
     //*/
-	///TODO : test fill_Arena, test verify
+	///TODO : test fill_Grid, test verify
 	///TODO : verify all cases (for nini)
 	///TODO : Learn SDL
 
