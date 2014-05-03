@@ -31,14 +31,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="src/arena.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="src/datatypes.h" />
-		<Unit filename="src/interface.h" />
-		<Unit filename="src/lib.c">
+		<Unit filename="src/grid.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/interface.h" />
 		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
