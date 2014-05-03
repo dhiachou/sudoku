@@ -47,7 +47,8 @@ int main() {
 
 	a = create(size);
 
-    fill_arena(&a,nbre_aleatoire(20));
+    init_randomizer(); //shall be done only once!!
+    fill_arena(&a,randomize(20));
 
     display_arena(a);
 

@@ -89,4 +89,14 @@ Boolean verify_result(Arena a);
  */
  #define sqr(i) i*i
 
+ /**
+  * Initialises the randomize seed
+  */
+void init_randomizer();
+
+/**
+ * Returns a random number between 0 and n
+ */
+int randomize(int n);
+
 #endif /* INTERFACE_H_ */

@@ -6,6 +6,8 @@
  */
 
 #include "interface.h"
+#include <time.h>
+#include <math.h>
 
 /**
  *	Creates an Arena with the l lines and c columns
@@ -91,10 +93,17 @@ Boolean verifier(Field k, Arena A ){
     return True;
 
 }
-
-int nbre_aleatoire(int n)
-{
+/**
+ * Initialises the randomize seed
+ */
+void init_randomizer(){
     srand(time(NULL));
+}
+
+/**
+ * Returns a random number between 0 and n
+ */
+int randomize(int n){
     return rand()% n ;
 }
 void fill_arena(Arena*A,int numero)
