@@ -91,5 +91,36 @@ Boolean verifier( Field k, Arena A ){
     return True;
 
 }
+void fill_arena(Arena*A)
+ int cl,column=0,row=0;
 
+    FILE* fichier=NULL;
+    fichier = fopen("grillefacile.txt","r");
+
+    row=0;
+    do {
+        cl=(fgetc(fichier));
+
+        if ('.'==cl) {
+
+            *(A->Arena[row][column].val)=0;
+        }
+        else if (cl<'9' && cl > '0'){
+
+            *(A->Arena[row][column].val)=cl-'0';
+        }
+
+
+        printf ("%d",*(A->Arena[row][column].val));
+
+        column++;
+        if (column==A->size.c)
+        {
+            printf ("\n");
+            column=0;
+            row++;
+        }
+
+    }while (cl!='\n' && row!=A->size.l);
+}
 

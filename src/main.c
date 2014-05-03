@@ -39,6 +39,9 @@ int main() {
 	printf("\n\nSolution: \n");
 
 	display_arena(sol); //*/
+	///TODO : test fill_Arena, test verify
+	///TODO : verify all cases (for nini)
+	///TODO : Learn SDL
 
 
 	return 0;
