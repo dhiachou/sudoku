@@ -51,9 +51,9 @@ int main() {
     fill_grid(&a,randomize(20));
 
     display_grid(a);
-
     //*/
-	///TODO : test fill_Grid, test verify
+
+	///TODO : test verify
 	///TODO : verify all cases (for nini)
 	///TODO : Learn SDL
 
