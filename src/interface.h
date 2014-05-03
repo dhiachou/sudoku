@@ -87,6 +87,6 @@ Boolean verify_result(Arena a);
  * returns the square of i
  * @param i : an integer number of which we'll return the square
  */
-
+ #define sqr(i) i*i
 
 #endif /* INTERFACE_H_ */
