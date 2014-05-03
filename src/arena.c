@@ -63,3 +63,33 @@ void display_arena(Arena a){
 
 	}
 }
+
+
+Boolean verifier( Field k, Arena A ){
+    int i=0, j=0;
+    //verification sur les colonnes
+    for (i=0 ; i< A.size.c ; i++){
+        if (A.Arena[k.line][i].val == k.val && i != k.column) {
+            return False ;
+        }
+    }
+
+    for (i=0 ; i< A.size.l ; i++){
+        if (A.Arena[i][k.column].val == k.val && i != k.line) {
+            return False ;
+        }
+    }
+
+    for (i = k.square.x * sqrt(A.size.l) ; i< (k.square.x+1)* sqrt(A.size.l); i++){
+        for (j=k.square.y * sqrt(A.size.c) ; j< (k.square.y+1)* sqrt(A.size.c); j++){
+            if ( (A.Arena[i][j] == k.val) && (i != k.line) && ( j != k.column))
+                return False;
+        }
+    }
+
+
+    return True;
+
+}
+
+
