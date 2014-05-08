@@ -22,3 +22,21 @@
 	"interface.h"
 	<math.h>
 
+1399574364 source:c:\users\dell\documents\github\sudoku\src\grid.c
+	"interface.h"
+	<time.h>
+	<math.h>
+
+1399574385 c:\users\dell\documents\github\sudoku\src\interface.h
+	<stdio.h>
+	<stdlib.h>
+	"datatypes.h"
+
+1399550102 c:\users\dell\documents\github\sudoku\src\datatypes.h
+
+1399550103 source:c:\users\dell\documents\github\sudoku\src\save_load.c
+	<stdlib.h>
+	<stdio.h>
+	"interface.h"
+	<math.h>
+

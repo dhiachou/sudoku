@@ -40,7 +40,7 @@ int main() {
 	//*/
 
 
-	//*Testing filling grid function:
+	//Testing filling grid function:
 	printf("Enter size :");
 	scanf("%d",&size.c);
 	scanf("%d",&size.l);
@@ -48,10 +48,10 @@ int main() {
 	a = create(size);
 
     init_randomizer(); //shall be done only once!!
-    fill_grid(&a,randomize(20));
+    fill_grid(&a,randomize(20),"ressources/easy");
 
     display_grid(a);
-    //*/
+
 
 	///TODO : test verify
 	///TODO : verify all cases (for nini)

@@ -69,7 +69,7 @@ void display_grid(Grid a){
 
 Boolean verifier(Field k, Grid A ){
     int i=0, j=0;
-    /*verying columns*/
+    //verying columns
     for (i=0 ; i< A.size.c ; i++){
         if (A.Grid[k.line][i].val == k.val && i != k.column) {
             return False ;
@@ -106,13 +106,13 @@ void init_randomizer(){
 int randomize(int n){
     return rand()% n ;
 }
-void fill_grid(Grid*A,int numero)
+void fill_grid(Grid*A,int numero,char * file)
  {
 
      int c,cl,column=0,row=0;
 
     FILE* fichier=NULL;
-    fichier = fopen("ressources/easy","r");
+    fichier = fopen(file,"r");
 
     row=0;
     /*boucle pour mettre le curseur dans la bonne position */

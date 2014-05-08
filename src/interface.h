@@ -28,7 +28,7 @@ Grid create(Vector size);
  *	the first parameter will be modified to become filled
  * TODO: write the fill_grid function
  */
-void fill_grid(Grid* a,int numero);
+void fill_grid(Grid* a,int numero,char * file);
 
 /**
  *  Generates a ready to play grid from a filled grid
