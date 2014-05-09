@@ -1,4 +1,5 @@
 #include "interface.h"
+#include<string.h>
 
 void game (Grid * grid){
 

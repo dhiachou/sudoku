@@ -75,13 +75,15 @@ Boolean save(Grid a);
  */
 Boolean load(Grid* a);
 
+Boolean verify(Field ,Grid);
+
 /**
  * Verifies whether the actual grid is a solution to the game
  * Returns true if it is a solution
  * @param a : the actual grid
  * TODO : write this function
  */
-Boolean verify_result(Grid a);
+Boolean verify_arena(Grid a);
 
 /**
  * returns the square of i

@@ -81,8 +81,21 @@ void display_grid(Grid a){
 	}
 }
 
+Boolean verify_arena(Grid g){
+    int  j=0,i=0;
 
-Boolean verifier(Field k, Grid A ){
+    for(i=0;i<g.size.l;i++){
+        for(j=0;j<g.size.c;j++){
+             if ( verify(g.Grid[i][j],g)==False) return False;
+         }
+
+    }
+
+    return True;
+}
+
+
+Boolean verify(Field k, Grid A ){
     int i=0, j=0;
     //verying columns
     for (i=0 ; i< A.size.c ; i++){
