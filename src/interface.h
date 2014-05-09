@@ -99,4 +99,10 @@ void init_randomizer();
  */
 int randomize(int n);
 
+
+/**
+ * Clears the screen
+ **/
+void clear();
+
 #endif /* INTERFACE_H_ */
