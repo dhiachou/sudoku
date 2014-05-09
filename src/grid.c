@@ -52,16 +52,34 @@ Grid create(Vector size){
 void display_grid(Grid a){
 	int i,j=0;
 	/*printf ("Entered display_grid");*/
+	printf("\t");
+	for (i = 0 ; i<a.size.c;i++){
+        printf ("%d \t",i+1);
+        if ((i+1) % (int)sqrt(a.size.c) ==0 ) printf("| \t");
+    }
+    printf("\n");
+    for (i = 0 ; i<a.size.l;i++)
+        printf ("___ \t",i+1);
+    printf("\n");
+
 	for (i=0;i<a.size.l;i++){
-		for (j=0;j<a.size.c;j++){
+        printf("%d||\t",i+1);
+		/*for (j=0;j<a.size.c;j++){
 			printf("===")	;
 		}
-		printf("\n");
+		printf("\n");*/
 		for (j=0;j<a.size.c;j++){
-			printf("|%d|",*(a.Grid[i][j].val))	;
+			printf("%d\t",*(a.Grid[i][j].val))	;
+            if ((j+1) % (int)sqrt(a.size.c) ==0 ) printf("|| \t");
 		}
 
-		printf("\n");
+		printf("\n\t");
+        if ((i+1) % (int)sqrt(a.size.l) ==0 )
+            for (j=0; j<a.size.c ; j++ ){
+                printf("=====\t");
+                if ((j+1) % (int)sqrt(a.size.c) ==0 ) printf("===\t");
+            }
+        printf("\n");
 
 	}
 }
