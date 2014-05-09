@@ -53,7 +53,7 @@ void display_grid(Grid a);
 /**
  *
  */
-/*void game(...TODO )*/
+void game(Grid * grid );
 
 /**
  * Saves actual progress into a file

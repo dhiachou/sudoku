@@ -40,7 +40,7 @@ int main() {
 	//*/
 
 
-	//Testing filling grid function:
+	/*//Testing filling grid function:
 	printf("Enter size :");
 	scanf("%d",&size.c);
 	scanf("%d",&size.l);
@@ -50,7 +50,16 @@ int main() {
     init_randomizer(); //shall be done only once!!
     fill_grid(&a,randomize(20),"ressources/easy");
 
-    display_grid(a);
+    display_grid(a);//*/
+
+    // TESTINT THE GAME FUNCTION
+    printf("Enter size :");
+	scanf("%d",&size.c);
+	scanf("%d",&size.l);
+    a = create(size),
+    game(&a);
+
+    //*/
 
 
 	///TODO : test verify

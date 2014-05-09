@@ -32,6 +32,9 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="src/datatypes.h" />
+		<Unit filename="src/game.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/grid.c">
 			<Option compilerVar="CC" />
 		</Unit>
