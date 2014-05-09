@@ -105,4 +105,7 @@ int randomize(int n);
  **/
 void clear();
 
+
+void delete_grid(Grid * grid);
+
 #endif /* INTERFACE_H_ */

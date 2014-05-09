@@ -59,7 +59,7 @@ void display_grid(Grid a){
     }
     printf("\n");
     for (i = 0 ; i<a.size.l;i++)
-        printf ("___ \t",i+1);
+        printf ("====\t");
     printf("\n");
 
 	for (i=0;i<a.size.l;i++){
@@ -163,5 +163,22 @@ void fill_grid(Grid*A,int numero,char * file)
 
     }while (cl!='\n' && row!=A->size.l);
     printf ("\n");
+}
+
+void delete_grid(Grid * grid){
+    int i=0, j=0;
+	/*Liberating each field*/
+	for (i =0; i<grid->size.l;i++){
+		for (j=0; j<grid->size.c; j++){
+			/*Allocating the value*/
+			free(grid->Grid[i][j].val);
+        }
+    }
+
+    //freeing the grid elements
+	for (i =0 ; i< grid->size.l;i++){
+		free(grid->Grid[i]);
+    }
+    free(grid->Grid);
 }
 
