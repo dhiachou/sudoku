@@ -63,7 +63,7 @@ void game(Grid * grid );
  *
  * TODO : write the save function
  */
-Boolean save(Grid a, Grid solution);
+Boolean save(Grid a);
 
 /**
  * Loads actual progress from a file
@@ -73,7 +73,7 @@ Boolean save(Grid a, Grid solution);
  *
  *	TODO : write the load function
  */
-Boolean load(Grid* a, Grid* solution);
+Boolean load(Grid* a);
 
 /**
  * Verifies whether the actual grid is a solution to the game

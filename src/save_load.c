@@ -12,7 +12,7 @@
 #include <math.h>
 
 
-Boolean load(Grid* a, Grid* solution){
+Boolean load(Grid* a){
 	Boolean exit_status = True;
 	int i=0, j=0;
 	Vector size ;
@@ -25,7 +25,6 @@ Boolean load(Grid* a, Grid* solution){
 
 	/*creating the imported grids with the correct size */
 	*a = create(size);
-	*solution = create(size);
 
 	if(NULL!=fin){	/*file opened correctly*/
 		/*reading fields' properties*/
@@ -34,11 +33,7 @@ Boolean load(Grid* a, Grid* solution){
 				fscanf(fin, "%d", a->Grid[i][j].val);
 			}
 		}
-		for ( i=0 ; i<solution->size.l ; i++){
-			for ( j=0 ; j<solution->size.c ; j++){
-				fscanf(fin, "%d", solution->Grid[i][j].val);
-			}
-		}
+
 	}
 	else {
 		fprintf(stderr,"Can't open file in read mode");
@@ -50,7 +45,7 @@ Boolean load(Grid* a, Grid* solution){
 }
 
 
-Boolean save(Grid a, Grid solution){
+Boolean save(Grid a){
 	Boolean exit_status = True;
 	FILE* fout = NULL;
 	int i = 0, j = 0;
@@ -66,12 +61,6 @@ Boolean save(Grid a, Grid solution){
 		for(i=0; i<a.size.l; i++){			/* each line of the actual grid */
 			for (j=0 ;j<a.size.c; j++){ 	/*each field*/
 				fprintf(fout, "%d ",*(a.Grid[i][j].val));/* saving the value */
-			}
-			fprintf(fout,"\n");
-		}
-		for(i=0; i<a.size.l; i++){			/* each line of the actual grid */
-			for (j=0 ;j<a.size.c ; j++){ 	/*each field*/
-				fprintf(fout, "%d ",*(solution.Grid[i][j].val));/* saving the value */
 			}
 			fprintf(fout,"\n");
 		}

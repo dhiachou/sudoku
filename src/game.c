@@ -82,7 +82,7 @@ void game (Grid * grid){
                     strcpy(notice,"field is not editable\n");
                 break;
             case 3 :        /// Save progress
-                    //save(grid);
+                    save(*grid);
                     strcpy(notice,"PROGRESS SAVED! \n");
                 break;
             default :       /// Wrong choice
