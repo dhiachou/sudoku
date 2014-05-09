@@ -64,10 +64,7 @@ void display_grid(Grid a){
 
 	for (i=0;i<a.size.l;i++){
         printf("%d||\t",i+1);
-		/*for (j=0;j<a.size.c;j++){
-			printf("===")	;
-		}
-		printf("\n");*/
+
 		for (j=0;j<a.size.c;j++){
 			printf("%d\t",*(a.Grid[i][j].val))	;
             if ((j+1) % (int)sqrt(a.size.c) ==0 ) printf("|| \t");
