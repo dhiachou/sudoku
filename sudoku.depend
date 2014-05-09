@@ -2,14 +2,17 @@
 1399130410 source:/home/dhia/workspace/eclipse/SUDOKU/src/arena.c
 	"interface.h"
 
-1399630195 /home/dhia/workspace/eclipse/SUDOKU/src/interface.h
+1399631020 /home/dhia/workspace/eclipse/SUDOKU/src/interface.h
 	<stdio.h>
 	<stdlib.h>
 	"datatypes.h"
 
 1399132615 /home/dhia/workspace/eclipse/SUDOKU/src/datatypes.h
 
-1399130868 source:/home/dhia/workspace/eclipse/SUDOKU/src/lib.c
+1399631452 source:/home/dhia/workspace/eclipse/SUDOKU/src/lib.c
+	"interface.h"
+	<stdlib.h>
+	<stdio.h>
 
 1399630225 source:/home/dhia/workspace/eclipse/SUDOKU/src/main.c
 	<stdio.h>
@@ -40,7 +43,7 @@
 	"interface.h"
 	<math.h>
 
-1399630028 source:/home/dhia/workspace/eclipse/SUDOKU/src/game.c
+1399631391 source:/home/dhia/workspace/eclipse/SUDOKU/src/game.c
 	"interface.h"
 
 1399629705 source:/home/dhia/workspace/eclipse/SUDOKU/src/grid.c

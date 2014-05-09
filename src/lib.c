@@ -3,11 +3,11 @@
 #include <stdio.h>
 
 
-#ifdef LINUX
+#ifdef __unix__
 #define CLEAR "clear"
 #else
 #define CLEAR "cls"
-#endif // LINUX
+#endif // linux
 
 
 void clear(){
