@@ -1,7 +1,91 @@
 #include "interface.h"
 #include<string.h>
+#define EASY 0
+#define MEDIUM 1
+#define HARD 2
 
 
+#define EASY_LINE_NUM 50
+#define MEDIUM_LINE_NUM 95
+#define HARD_LINE_NUM 11
+
+int levels_menu()
+{
+    int choice=0;
+    do {
+        printf("which level \n");
+        printf("1-easy \n");
+        printf("2-medium \n");
+        printf("3-hard\n");
+        scanf("%d",&choice);
+    }while (choice <1 || choice >3);
+    return choice;
+}
+
+Grid main_menu()
+{
+    int choice=0, diff=0,n=0;
+    char notice [200]="\0";
+    Grid grid ;
+    Vector size;
+
+    size.c=3;
+    size.l=3;
+
+    menu :
+    clear();
+    if (strlen(notice) > 0   )
+    {
+            printf("%s", notice);
+            notice[0] = '\O';
+    }
+    printf("hello good mornin \n");
+    printf("what would you like to do today ? \n");
+    printf("1- new game \n");
+    printf("2- load game \n");
+    printf("0- Quit \n");
+    scanf("%d",&choice);
+
+    switch(choice)
+    {
+        case 0: /// Exit
+            exit(EXIT_SUCCESS);
+            break;
+        case 1: /// new game
+            diff=levels_menu();
+            switch(diff)
+            {
+                case EASY :
+                    n=randomize(EASY_LINE_NUM);
+                    grid= create(size);
+                    fill_grid(&grid,n,"ressources/easy");
+                    break;
+                case MEDIUM :
+                    n=randomize(MEDIUM_LINE_NUM);
+                     grid= create(size);
+                    fill_grid(&grid,n,"ressources/hard");
+                    break;
+                case HARD :
+                    n=randomize(HARD_LINE_NUM);
+                     grid= create(size);
+                    fill_grid(&grid,n,"ressources/hardest");
+                    break ;
+                default:
+                    fprintf(stderr," sth went wrong \n");
+                    exit(EXIT_FAILURE);
+                break;
+            }
+
+            break;
+        case 2: /// load game
+            break;
+        default:
+            strcpy(notice, "wrong input \n");
+            goto menu;
+            break;
+    }
+    return grid;
+}
 void game (Grid * grid){
 
     unsigned short choice = 0;

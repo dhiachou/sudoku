@@ -52,3 +52,31 @@
 	<time.h>
 	<math.h>
 
+1399635895 source:/home/wejwej/workspace/c/sudooku/sudoku/src/lib.c
+	"interface.h"
+	<stdlib.h>
+	<stdio.h>
+
+1399712721 /home/wejwej/workspace/c/sudooku/sudoku/src/interface.h
+	<stdio.h>
+	<stdlib.h>
+	"datatypes.h"
+
+1399133194 /home/wejwej/workspace/c/sudooku/sudoku/src/datatypes.h
+
+1399635895 source:/home/wejwej/workspace/c/sudooku/sudoku/src/save_load.c
+	<stdlib.h>
+	<stdio.h>
+	"interface.h"
+	<math.h>
+
+1399711945 source:/home/wejwej/workspace/c/sudooku/sudoku/src/grid.c
+	"interface.h"
+	<time.h>
+	<math.h>
+
+1399711945 source:/home/wejwej/workspace/c/sudooku/sudoku/src/main.c
+	<stdio.h>
+	<stdlib.h>
+	"interface.h"
+

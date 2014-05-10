@@ -110,4 +110,6 @@ void clear();
 
 void delete_grid(Grid * grid);
 
+Grid main_menu();
+
 #endif /* INTERFACE_H_ */
