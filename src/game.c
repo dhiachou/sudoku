@@ -1,6 +1,7 @@
 #include "interface.h"
 #include<string.h>
 
+
 void game (Grid * grid){
 
     unsigned short choice = 0;
@@ -39,12 +40,14 @@ void game (Grid * grid){
                 break;
             case 1 :        /// Enter a number
                 coord_input:
-                printf("Enter coordinates seperated by a space (line,column) : ");
+                printf("Enter coordinates seperated by a space (line column) : ");
                 scanf ("%d %d", &coord.x , &coord.y );
 
                 //Shall test the input (input data between 0 and max allowed values (right coordinates)
-                if (coord.x <=0 || coord.x> grid->size.c+1 || coord.y <=0 || coord.y>grid->size.l+1)
+                if (coord.x <=0 || coord.x> grid->size.c+1 || coord.y <=0 || coord.y>grid->size.l+1){
+                    printf("Wrong coordinates!\n");
                     goto coord_input;
+                }
 
                 number_input:
                 printf("Enter the number to put in (%d,%d) : " ,coord.x, coord.y);
@@ -62,7 +65,7 @@ void game (Grid * grid){
             case 2 :        /// Edit a number
 
                 coord_input2:
-                printf("Enter coordinates seperated by a space (line,column) : ");
+                printf("Enter coordinates seperated by a space (line column) : ");
                 scanf ("%d %d", &coord.x , &coord.y );
 
                 //Shall test the input (input data between 0 and max allowed values (right coordinates)

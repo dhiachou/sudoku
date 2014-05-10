@@ -134,8 +134,7 @@ void init_randomizer(){
 int randomize(int n){
     return rand()% n ;
 }
-void fill_grid(Grid*A,int numero,char * file)
- {
+void fill_grid(Grid*A,int numero,char * file){
 
      int c,cl,column=0,row=0;
 

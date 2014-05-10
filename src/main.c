@@ -52,7 +52,7 @@ int main() {
 
     display_grid(a);//*/
 
-    // TESTINT THE GAME FUNCTION
+    /*// TESTINT THE GAME FUNCTION
     printf("Enter size :");
 	scanf("%d",&size.c);
 	scanf("%d",&size.l);
@@ -61,12 +61,11 @@ int main() {
 
     //*/
 
+    a = main_menu();
 
-	///TODO : test verify
-	///TODO : verify all cases (for nini)
+
 	///TODO : Learn SDL
 
-	///TODO : WE NEED TO FREE RESERVED MEMORY ON CLOSE !!
 
 
 	return 0;
