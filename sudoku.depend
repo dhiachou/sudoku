@@ -75,8 +75,12 @@
 	<time.h>
 	<math.h>
 
-1399711945 source:/home/wejwej/workspace/c/sudooku/sudoku/src/main.c
+1399714488 source:/home/wejwej/workspace/c/sudooku/sudoku/src/main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
+
+1399714388 source:/home/wejwej/workspace/c/sudooku/sudoku/src/game.c
+	"interface.h"
+	<string.h>
 

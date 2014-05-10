@@ -163,7 +163,7 @@ void fill_grid(Grid*A,int numero,char * file){
         }
 
 
-        printf ("%d",*(A->Grid[row][column].val));
+   //     printf ("%d",*(A->Grid[row][column].val));
 
         column++;
         if (column==A->size.c)

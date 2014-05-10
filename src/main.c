@@ -62,6 +62,7 @@ int main() {
     //*/
 
     a = main_menu();
+    game(&a);
 
 
 	///TODO : Learn SDL
