@@ -32,6 +32,9 @@ Grid main_menu()
     size.c=3;
     size.l=3;
 
+
+    grid= create(size);
+
     menu :
     clear();
     if (strlen(notice) > 0   )
@@ -39,10 +42,10 @@ Grid main_menu()
             printf("%s", notice);
             notice[0] = '\O';
     }
-    printf("hello good mornin \n");
-    printf("what would you like to do today ? \n");
-    printf("1- new game \n");
-    printf("2- load game \n");
+    printf("Welcome to SUDOKU ! \n");
+    printf("what would you like to do ? \n");
+    printf("1- New game \n");
+    printf("2- Load game \n");
     printf("0- Quit \n");
     scanf("%d",&choice);
 
@@ -57,27 +60,30 @@ Grid main_menu()
             {
                 case EASY :
                     n=randomize(EASY_LINE_NUM);
-                    grid= create(size);
                     fill_grid(&grid,n,"ressources/easy");
                     break;
                 case MEDIUM :
                     n=randomize(MEDIUM_LINE_NUM);
-                     grid= create(size);
                     fill_grid(&grid,n,"ressources/hard");
                     break;
                 case HARD :
                     n=randomize(HARD_LINE_NUM);
-                     grid= create(size);
                     fill_grid(&grid,n,"ressources/hardest");
                     break ;
                 default:
-                    fprintf(stderr," sth went wrong \n");
+                    fprintf(stderr," Something went wrong \n");
+                    delete_grid(&grid);
                     exit(EXIT_FAILURE);
                 break;
             }
 
             break;
         case 2: /// load game
+            if (load(&grid) == False ) {
+                fprintf(stderr, "Something went wrong!\n");
+                delete_grid(&grid);
+                exit(EXIT_FAILURE);
+            }
             break;
         default:
             strcpy(notice, "wrong input \n");
