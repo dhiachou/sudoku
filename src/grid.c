@@ -15,7 +15,7 @@
  *
  *	returns the newly created grid
  */
-Grid create(Vector size){
+Grid create(Size size){
 	Grid A;
 	int i=0, j=0;
 

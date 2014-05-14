@@ -27,15 +27,15 @@ typedef struct Field {
 	int column;
 } Field;
 
-typedef struct Vector {
+typedef struct Size {
 	int l;
 	int c;
-} Vector;
+} Size;
 
 
 typedef struct Grid {
 	Field** Grid;
-	Vector size;
+	Size size;
 }Grid ;
 
 

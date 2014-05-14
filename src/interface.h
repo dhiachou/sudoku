@@ -18,7 +18,7 @@
  *
  *	returns the newly created grid
  */
-Grid create(Vector size);
+Grid create(Size size);
 
 /**
  *  Fills the empty grid a with random numbers from 1 to l*c

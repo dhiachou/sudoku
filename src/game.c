@@ -30,7 +30,7 @@ Grid main_menu()
     notice [0] = '\0';
 
     Grid grid ;
-    Vector size;
+    Size size;
 
     size.c=3;
     size.l=3;
@@ -104,7 +104,7 @@ void game (Grid * grid){
     unsigned short choice = 0;
     Coordinates coord;
     int number=0;
-    char notice * = NULL;
+    char *notice = NULL;
 
     notice = malloc(sizeof(char));
     notice [0] = '\0';

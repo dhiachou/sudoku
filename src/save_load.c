@@ -15,7 +15,7 @@
 Boolean load(Grid* a){
 	Boolean exit_status = True;
 	int i=0, j=0;
-	Vector size ;
+	Size size ;
 	FILE* fin  = NULL;
 
 	fin = fopen("game","r"); /*Opening file*/

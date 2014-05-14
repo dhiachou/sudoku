@@ -12,7 +12,7 @@
 
 
 int main() {
-	Vector size;
+	Size size;
 	Grid a , sol;
 
 	/*Testing create function
