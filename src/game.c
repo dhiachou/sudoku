@@ -1,3 +1,5 @@
+#ifdef USING_CONSOLE
+
 #include "interface.h"
 #include<string.h>
 #define EASY 0
@@ -203,3 +205,4 @@ void game (Grid * grid){
         }
     }
 }
+#endif

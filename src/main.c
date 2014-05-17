@@ -1,5 +1,8 @@
+#define USING_CONSOLE
+
+#ifdef USING_CONSOLE
 //============================================================================
-// Name        : SUDOKU.cpp
+// Name        : main.cpp
 // Author      : Dhaw - Salmouch - Dandoun - Nini
 // Version     :
 // Copyright   : All rights reserved to II1G
@@ -71,3 +74,4 @@ int main() {
 
 	return 0;
 }
+#endif
