@@ -65,7 +65,7 @@ int main() {
     game(&a);
 
 
-	///TODO : Learn SDL
+
 
 
 

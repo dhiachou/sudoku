@@ -12,6 +12,8 @@
 #include <math.h>
 
 
+/** loads an already saved Arena from file **/
+
 Boolean load(Grid* a){
 	Boolean exit_status = True;
 	int i=0, j=0;
@@ -43,6 +45,8 @@ Boolean load(Grid* a){
 	if(fclose(fin)!=0) exit_status = False;
 	return exit_status;
 }
+
+ /** Saves game in progress into file  **/
 
 
 Boolean save(Grid a){

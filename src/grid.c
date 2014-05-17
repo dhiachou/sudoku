@@ -48,6 +48,9 @@ Grid create(Size size){
 
 	return A;
 }
+ /**
+ *  Displays the Arena
+ **/
 
 void display_grid(Grid a){
 	int i,j=0;
@@ -81,7 +84,11 @@ void display_grid(Grid a){
 	}
 }
 
-Boolean verify_arena(Grid g){
+ /**
+ *   Tests whether the whole Arena is correct
+ **/
+
+ Boolean verify_arena(Grid g){
     int  j=0,i=0;
 
     for(i=0;i<g.size.l;i++){
@@ -94,6 +101,9 @@ Boolean verify_arena(Grid g){
     return True;
 }
 
+/**
+*   Tests whether the given  fiels verifies the conditions (columns, rows, square)
+**/
 
 Boolean verify(Field k, Grid A ){
     int i=0, j=0;
@@ -134,6 +144,10 @@ void init_randomizer(){
 int randomize(int n){
     return rand()% n ;
 }
+
+/**
+ * Loads a random ready to play Arena from File
+ **/
 void fill_grid(Grid*A,int numero,char * file){
 
      int c,cl,column=0,row=0;
@@ -176,6 +190,9 @@ void fill_grid(Grid*A,int numero,char * file){
     }while (cl!='\n' && row!=A->size.l);
     printf ("\n");
 }
+ /**
+   *  Deletes the arena and liberate the allocated memory
+ **/
 
 void delete_grid(Grid * grid){
     int i=0, j=0;
