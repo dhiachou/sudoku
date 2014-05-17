@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DUSING_CONSOLE" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -31,6 +32,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="src/SDLgame.c~" />
+		<Unit filename="src/SDLmain.c~" />
 		<Unit filename="src/datatypes.h" />
 		<Unit filename="src/game.c">
 			<Option compilerVar="CC" />
