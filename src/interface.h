@@ -5,6 +5,12 @@
  *      Author: Dhia - Salma - Nidhal - Ouijdane
  */
 
+#ifdef USING_CONSOLE
+#include "game.h"
+#elifdef USING_SDL
+#include "SDLgame.h"
+#endif // USING_CONSOLE
+
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
 
@@ -42,16 +48,16 @@ void fill_grid(Grid* a,int numero,char * file);
 Grid ready_grid(Grid a);
 
 /**
- *  Displays the current grid
+ *  Displays the current grid on console
  *  @param a : Grid
  *  @param l : lines count
  *  @param c : column count
- *  TODO : make this function with SDL2
+ *
  */
 void display_grid(Grid a);
 
 /**
- *
+ * CONSOLE TYPE game function
  */
 void game(Grid * grid );
 

@@ -32,7 +32,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="src/SDLgame.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/SDLgame.c~" />
+		<Unit filename="src/SDLgame.h" />
+		<Unit filename="src/SDLmain.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/SDLmain.c~" />
 		<Unit filename="src/datatypes.h" />
 		<Unit filename="src/game.c">
