@@ -43,6 +43,9 @@ Grid create(Size size){
 			/*Affecting the number of the square where the field is*/
 			A.Grid[i][j].square.x = (short)i/size.l;
 			A.Grid[i][j].square.y = (short)j/size.c;
+
+			/*making the field editable (default value ) */
+			A.Grid[i][j].editable = True ;
 		}
 	}
 
@@ -174,6 +177,7 @@ void fill_grid(Grid*A,int numero,char * file){
         else if (cl<='9' && cl > '0'){
 
             *(A->Grid[row][column].val)=cl-'0';
+            A->Grid[row][column].editable = False ;
         }
 
 
