@@ -128,7 +128,7 @@ void game (Grid * grid){
         //Asking for next action
         printf ("[?] What to do ? : \n");
         printf (" 1 - Enter a number\n");
-        printf (" 2 - Edit a number\n");  ///need to update the data structure to know which numbers are editable and which are not
+        printf (" 2 - Edit a number\n");
         printf (" 3 - Save progress\n");
         printf (" 0 - Quit\n");
 
@@ -159,8 +159,8 @@ void game (Grid * grid){
                 //checking whether the number is correct
                 if (number <0 || number > grid->size.c)
                     goto number_input;
-                //putting the number in the right place if it is a zero (AND EDITABLE! TODO )
-                if (0 == *(grid->Grid[coord.x-1][coord.y-1].val))
+                //putting the number in the right place if it is a zero and editable
+                if (0 == *(grid->Grid[coord.x-1][coord.y-1].val) && True == grid->Grid[coord.x -1][coord.y -1].editable)
                     *(grid->Grid[coord.x-1][coord.y-1].val) = number;
                 else{
                     notice = realloc(notice , strlen("field is not empty, or is not editable\n")*sizeof(char));
@@ -184,8 +184,8 @@ void game (Grid * grid){
                 //checking whether the number is correct
                 if (number <0 || number > grid->size.c)
                     goto number_input2;
-                //putting the number in the right place if it is ( EDITABLE! TODO )
-                if (True)
+                //putting the number in the right place if it is EDITABLE!
+                if ( True == grid->Grid[coord.x -1][coord.y -1].editable )
                     *(grid->Grid[coord.x-1][coord.y-1].val) = number;
                 else{
                     notice = realloc(notice , strlen("field is not editable\n")*sizeof(char));
