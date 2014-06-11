@@ -5,11 +5,6 @@
  *      Author: Dhia - Salma - Nidhal - Ouijdane
  */
 
-#ifdef USING_CONSOLE
-#include "game.h"
-#elifdef USING_SDL
-#include "SDLgame.h"
-#endif // USING_CONSOLE
 
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
@@ -117,5 +112,12 @@ void clear();
 void delete_grid(Grid * grid);
 
 Grid main_menu();
+
+
+#ifdef USING_CONSOLE
+#include "game.h"
+#elif defined USING_SDL
+#include "SDLgame.h"
+#endif // USING_CONSOLE
 
 #endif /* INTERFACE_H_ */

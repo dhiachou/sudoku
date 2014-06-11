@@ -25,6 +25,7 @@ typedef struct Field {
 	Coordinates square;
 	int line;
 	int column;
+	Boolean editable;
 } Field;
 
 typedef struct Size {

@@ -32,7 +32,11 @@ Boolean load(Grid* a){
 		/*reading fields' properties*/
 		for ( i=0 ; i<a->size.l ; i++){
 			for ( j=0 ; j<a->size.c ; j++){
-				fscanf(fin, "%d", a->Grid[i][j].val);
+				fscanf(fin, "%d %d", a->Grid[i][j].val, &a->Grid[i][j].editable);
+				a->Grid[i][j].column = j;
+				a->Grid[i][j].line = i;
+				a->Grid[i][j].square.x = i / sqrt(a->size.l);
+				a->Grid[i][j].square.y =  i/ sqrt(a->size.c);
 			}
 		}
 
@@ -64,7 +68,7 @@ Boolean save(Grid a){
 		/*writing each fields property on a new line */
 		for(i=0; i<a.size.l; i++){			/* each line of the actual grid */
 			for (j=0 ;j<a.size.c; j++){ 	/*each field*/
-				fprintf(fout, "%d ",*(a.Grid[i][j].val));/* saving the value */
+				fprintf(fout, "%d %d ",*(a.Grid[i][j].val) , a.Grid[i][j].editable);/* saving the value */
 			}
 			fprintf(fout,"\n");
 		}
