@@ -13,3 +13,12 @@
 void clear(){
     system(CLEAR);
 }
+
+#ifdef USING_SDL
+int in_surface(Uint16 x , Uint16 y , SDL_Surface* btn , SDL_Rect position)
+{
+    return (position.x < x &&\
+                    x < (position.x + btn->w) && position.y < y && \
+                    y < (position.y + btn->h));
+}
+#endif

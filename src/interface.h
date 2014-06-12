@@ -13,6 +13,16 @@
 #include <stdlib.h>
 #include "datatypes.h"
 
+#ifdef USING_CONSOLE
+#include "game.h"
+#elif defined USING_SDL
+#include "SDLgame.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+int in_surface(Uint16 x , Uint16 y , SDL_Surface* btn , SDL_Rect position);
+#endif // USING_CONSOLE
+
 /**
  *	Creates an Grid with l lines and c columns
  *	@param size : a vector containing the number of lines and columns
@@ -51,10 +61,25 @@ Grid ready_grid(Grid a);
  */
 void display_grid(Grid a);
 
+#ifdef USING_CONSOLE
 /**
  * CONSOLE TYPE game function
  */
 void game(Grid * grid );
+
+
+Grid main_menu();
+
+#elif defined USING_SDL
+/**
+ * GUI game function
+ */
+void game(Grid * grid , SDL_Surface* screen);
+
+
+Grid main_menu(SDL_Surface * screen);
+
+#endif // USING_CONSOLE
 
 /**
  * Saves actual progress into a file
@@ -111,13 +136,5 @@ void clear();
 
 void delete_grid(Grid * grid);
 
-Grid main_menu();
-
-
-#ifdef USING_CONSOLE
-#include "game.h"
-#elif defined USING_SDL
-#include "SDLgame.h"
-#endif // USING_CONSOLE
 
 #endif /* INTERFACE_H_ */

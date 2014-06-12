@@ -2,16 +2,19 @@
 1399130410 source:/home/dhia/workspace/eclipse/SUDOKU/src/arena.c
 	"interface.h"
 
-1402444962 /home/dhia/workspace/eclipse/SUDOKU/src/interface.h
+1402594626 /home/dhia/workspace/eclipse/SUDOKU/src/interface.h
 	<stdio.h>
 	<stdlib.h>
 	"datatypes.h"
 	"game.h"
 	"SDLgame.h"
+	<SDL/SDL.h>
+	<SDL/SDL_image.h>
+	<SDL/SDL_ttf.h>
 
 1402443841 /home/dhia/workspace/eclipse/SUDOKU/src/datatypes.h
 
-1399631452 source:/home/dhia/workspace/eclipse/SUDOKU/src/lib.c
+1402594210 source:/home/dhia/workspace/eclipse/SUDOKU/src/lib.c
 	"interface.h"
 	<stdlib.h>
 	<stdio.h>
@@ -45,11 +48,11 @@
 	"interface.h"
 	<math.h>
 
-1400318952 source:/home/dhia/workspace/eclipse/SUDOKU/src/game.c
+1402446171 source:/home/dhia/workspace/eclipse/SUDOKU/src/game.c
 	"interface.h"
 	<string.h>
 
-1400318737 source:/home/dhia/workspace/eclipse/SUDOKU/src/grid.c
+1402445740 source:/home/dhia/workspace/eclipse/SUDOKU/src/grid.c
 	"interface.h"
 	<time.h>
 	<math.h>
@@ -90,11 +93,11 @@
 
 1400320154 /home/dhia/workspace/eclipse/SUDOKU/src/SDLgame.h
 
-1400318705 source:/home/dhia/workspace/eclipse/SUDOKU/src/SDLgame.c
+1402594421 source:/home/dhia/workspace/eclipse/SUDOKU/src/SDLgame.c
 	"interface.h"
 	<string.h>
 
-1400318572 source:/home/dhia/workspace/eclipse/SUDOKU/src/SDLmain.c
+1402594413 source:/home/dhia/workspace/eclipse/SUDOKU/src/SDLmain.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"

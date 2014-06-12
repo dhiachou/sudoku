@@ -16,6 +16,20 @@
 int main() {
 	Size size;
 	Grid a , sol;
+    TTF_Init();
+
+    SDL_Surface *screen;
+    SDL_Init(SDL_INIT_VIDEO);
+    if (SDL_Init(SDL_INIT_VIDEO)==-1)
+    {
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+
+    /** Opening window**/
+    screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);  ///Load the window
+    SDL_WM_SetCaption("Sudoku" , NULL);
+
 
 	/*Testing create function
 	printf("Enter size :");
@@ -54,7 +68,7 @@ int main() {
 
     display_grid(a);//*/
 
-    /*// TESTINT THE GAME FUNCTION
+    /*// TESTING THE GAME FUNCTION
     printf("Enter size :");
 	scanf("%d",&size.c);
 	scanf("%d",&size.l);
@@ -63,12 +77,8 @@ int main() {
 
     //*/
 
-    a = main_menu();
-    game(&a);
-
-
-	///TODO : Learn SDL
-
+    a = main_menu(screen);
+    game(&a,screen);
 
 
 	return 0;

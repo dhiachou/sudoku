@@ -22,36 +22,140 @@ int levels_menu()
     return choice;
 }
 
-Grid main_menu()
+Grid main_menu(SDL_Surface * screen)
 {
-    int choice=0, diff=0,n=0;
-    char *notice =NULL;
+    int diff=0,n=0;
+    SDL_Surface *bg_img, *btn, *btn_clicked, *btn_exit, *btn_newGame, *btn_loadGame, *txt_title,\
+                *txt_newGame, *txt_loadGame, *txt_exit ;
+    SDL_Rect position, position_btn_newGame, position_btn_loadGame, position_btn_exit, position_txt_title,\
+             position_txt_newGame, position_txt_loadGame, position_txt_exit ;
+    SDL_Event event;
+    TTF_Font *font  = NULL;
+    TTF_Font *font1 = NULL;
+    SDL_Color couleurNoire = {0 , 0 , 0 };
+    SDL_Color couleurBlanc = {255,255,255};
 
-    notice = malloc(sizeof(char));
-    notice [0] = '\0';
+    unsigned short repeat = 1, choice;
 
+
+    /** Creating an empty new grid **/
     Grid grid ;
     Size size;
-
     size.c=3;
     size.l=3;
-
-
     grid= create(size);
 
-    menu :
-    clear();
-    if (strlen(notice) > 0   )
-    {
-            printf("%s", notice);
-            notice[0] = '\O';
+        /** Loading images **/
+    if (! (bg_img      = IMG_Load("ressources/img/background.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
     }
-    printf("Welcome to SUDOKU ! \n");
-    printf("what would you like to do ? \n");
-    printf("1- New game \n");
-    printf("2- Load game \n");
-    printf("0- Quit \n");
-    scanf("%d",&choice);
+    if (! (btn         = IMG_Load("ressources/img/btn.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(btn_clicked = IMG_Load("ressources/img/btn_clicked.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+
+    /**Loading fonts **/
+    if (!(font  = TTF_OpenFont ("ressources/fonts/SakiScript.otf"    , 150))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(font1 = TTF_OpenFont ("ressources/fonts/Eyes Believer.ttf" , 30 ))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+
+    /**initializing texts**/
+    txt_title   = TTF_RenderText_Blended(font , "Sudoku"      , couleurNoire);
+    txt_newGame = TTF_RenderText_Blended(font1, "NEW GAME"    , couleurBlanc);
+    txt_loadGame= TTF_RenderText_Blended(font1, "LOAD GAME"   , couleurBlanc);
+    txt_exit    = TTF_RenderText_Blended(font1, "EXIT"        , couleurBlanc);
+
+    /**Setting everything positions **/
+    position.x = 0;
+    position.y = 0;
+
+    position_btn_newGame.x=200;
+    position_btn_newGame.y=230;
+
+    position_btn_loadGame.x=200;
+    position_btn_loadGame.y=330;
+
+    position_btn_exit.x=200;
+    position_btn_exit.y=430;
+
+    position_txt_title.x = 250;
+    position_txt_title.y = 50;
+
+    position_txt_newGame.x=350;
+    position_txt_newGame.y=250;
+
+    position_txt_loadGame.x=350;
+    position_txt_loadGame.y=350;
+
+    position_txt_exit.x=380;
+    position_txt_exit.y=450;
+
+
+    /** Displaying the menu **/
+    btn_exit = btn_newGame = btn_loadGame = btn;
+    /*** Program's main loop **/
+    while (repeat) /* TANT QUE la variable ne vaut pas 0 */
+    {
+        SDL_WaitEvent(&event); /* On attend un événement qu'on récupère dans event */
+        switch(event.type) /* On teste le type d'événement */
+        {
+            case SDL_QUIT: /* Si c'est un événement QUITTER */
+                repeat = 0; /* On met le booléen à 0, donc la boucle va s'arrêter */
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if (event.button.button == SDL_BUTTON_LEFT )
+                {
+                    if( in_surface(event.button.x , event.button.y , btn_newGame , position_btn_newGame))
+                        btn_newGame = btn_clicked;
+                    if( in_surface(event.button.x , event.button.y , btn_loadGame , position_btn_loadGame))
+                        btn_loadGame = btn_clicked;
+                    if( in_surface(event.button.x , event.button.y , btn_exit , position_btn_exit))
+                        btn_exit = btn_clicked;
+                }
+                break;
+            case SDL_MOUSEBUTTONUP :
+                if ( event.button.button == SDL_BUTTON_LEFT )
+                {
+                    if(in_surface(event.button.x , event.button.y , btn_exit , position_btn_exit)){
+                        repeat = 0 ;
+                        choice = 0;
+                    }
+                    else if(in_surface(event.button.x , event.button.y , btn_newGame , position_btn_newGame)){
+                        repeat = 0 ;
+                        choice = 1;
+                    }
+                    else if(in_surface(event.button.x , event.button.y , btn_loadGame , position_btn_loadGame)){
+                        repeat = 0 ;
+                        choice = 2;
+                    }
+                    btn_exit = btn_loadGame = btn_newGame = btn;
+                }
+
+                break;
+
+        }
+
+        SDL_BlitSurface(bg_img      , NULL, screen, &position                );
+        SDL_BlitSurface(btn_newGame , NULL, screen, &position_btn_newGame    );
+        SDL_BlitSurface(btn_loadGame, NULL, screen, &position_btn_loadGame   );
+        SDL_BlitSurface(btn_exit    , NULL, screen, &position_btn_exit       );
+        SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title      );
+        SDL_BlitSurface(txt_newGame , NULL, screen, &position_txt_newGame    );
+        SDL_BlitSurface(txt_loadGame, NULL, screen, &position_txt_loadGame   );
+        SDL_BlitSurface(txt_exit    , NULL, screen, &position_txt_exit       );
+
+        SDL_Flip(screen);
+    }
 
     switch(choice)
     {
@@ -59,7 +163,7 @@ Grid main_menu()
             exit(EXIT_SUCCESS);
             break;
         case 1: /// new game
-            diff=levels_menu();
+            diff=levels_menu(screen);
             switch(diff)
             {
                 case EASY :
@@ -77,7 +181,6 @@ Grid main_menu()
                 default:
                     fprintf(stderr," Something went wrong \n");
                     delete_grid(&grid);
-                    free(notice);
                     exit(EXIT_FAILURE);
                 break;
             }
@@ -85,22 +188,15 @@ Grid main_menu()
             break;
         case 2: /// load game
             if (load(&grid) == False ) {
-                fprintf(stderr, "Something went wrong!\n");
+                fprintf(stderr, "Something went wrong!\n\tcouldn't load grid");
                 delete_grid(&grid);
-                free(notice);
                 exit(EXIT_FAILURE);
             }
             break;
-        default:
-            notice = realloc(notice, strlen("wrong input \n") * sizeof(char));
-            strcpy(notice, "wrong input \n");
-            goto menu;
-            break;
     }
-    free(notice);
     return grid;
 }
-void game (Grid * grid){
+void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
     unsigned short choice = 0;
     Coordinates coord;

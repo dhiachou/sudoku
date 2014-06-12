@@ -13,7 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add option="-DUSING_CONSOLE" />
+					<Add option="-DUSING_SDL" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
