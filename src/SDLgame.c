@@ -1,6 +1,6 @@
 #ifdef USING_SDL
 #include "interface.h"
-#include<string.h>
+#include <string.h>
 #define EASY 0
 #define MEDIUM 1
 #define HARD 2
@@ -9,16 +9,143 @@
 #define MEDIUM_LINE_NUM 95
 #define HARD_LINE_NUM 11
 
-int levels_menu()
+int levels_menu(SDL_Surface* screen)
 {
-    int choice=0;
-    do {
-        printf("which level \n");
-        printf("1-easy \n");
-        printf("2-medium \n");
-        printf("3-hard\n");
-        scanf("%d",&choice);
-    }while (choice <1 || choice >3);
+    SDL_Surface *bg_img, *btn, *btn_clicked, *btn_hard, *btn_easy, *btn_medium, *txt_title,\
+                *txt_easy, *txt_medium, *txt_hard, *txt_choose;
+    SDL_Rect position, position_btn_easy, position_btn_medium, position_btn_hard, position_txt_title,\
+             position_txt_easy, position_txt_medium, position_txt_hard, position_txt_choose;
+    SDL_Event event;
+    TTF_Font *font  = NULL, *font2 = NULL;
+    TTF_Font *font1 = NULL;
+    SDL_Color color_black = {0 , 0 , 0 };
+    SDL_Color color_white = {255,255,255};
+
+    unsigned short repeat = 1, choice = 0;
+
+    /** Loading images **/
+    if (! (bg_img      = IMG_Load("ressources/img/background.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (! (btn         = IMG_Load("ressources/img/btn.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(btn_clicked = IMG_Load("ressources/img/btn_clicked.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+
+    /**Loading fonts **/
+    if (!(font  = TTF_OpenFont ("ressources/fonts/SakiScript.otf"    , 150))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(font1 = TTF_OpenFont ("ressources/fonts/Eyes Believer.ttf" , 30 ))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(font2 = TTF_OpenFont ("ressources/fonts/Eyes Believer.ttf" , 20 ))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+
+    /**initializing texts**/
+    txt_title   = TTF_RenderText_Blended(font , "Sudoku"      , color_black);
+    txt_choose  = TTF_RenderText_Blended(font2, "Please choose level :", color_black);
+    txt_easy    = TTF_RenderText_Blended(font1, "easy"        , color_white);
+    txt_medium  = TTF_RenderText_Blended(font1, "medium"      , color_white);
+    txt_hard    = TTF_RenderText_Blended(font1, "hard"        , color_white);
+
+    /**Setting everything positions **/
+    position.x = 0;
+    position.y = 0;
+
+    position_txt_choose.x = 50;
+    position_txt_choose.y = 210;
+
+    position_btn_easy.x=200;
+    position_btn_easy.y=240;
+
+    position_btn_medium.x=200;
+    position_btn_medium.y=340;
+
+    position_btn_hard.x=200;
+    position_btn_hard.y=440;
+
+    position_txt_title.x = 250;
+    position_txt_title.y = 60;
+
+    position_txt_easy.x=350;
+    position_txt_easy.y=260;
+
+    position_txt_medium.x=350;
+    position_txt_medium.y=360;
+
+    position_txt_hard.x=380;
+    position_txt_hard.y=460;
+
+
+    /** Displaying the menu **/
+    btn_hard = btn_easy = btn_medium = btn;
+    /*** Program's main loop **/
+    while (repeat) /* TANT QUE la variable ne vaut pas 0 */
+    {
+        SDL_WaitEvent(&event); /* On attend un événement qu'on récupère dans event */
+        switch(event.type) /* On teste le type d'événement */
+        {
+            case SDL_QUIT: /* Si c'est un événement QUITTER */
+                repeat = 0; /* On met le booléen à 0, donc la boucle va s'arrêter */
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if (event.button.button == SDL_BUTTON_LEFT )
+                {
+                    if( in_surface(event.button.x , event.button.y , btn_easy , position_btn_easy))
+                        btn_easy = btn_clicked;
+                    if( in_surface(event.button.x , event.button.y , btn_medium , position_btn_medium))
+                        btn_medium = btn_clicked;
+                    if( in_surface(event.button.x , event.button.y , btn_hard , position_btn_hard))
+                        btn_hard = btn_clicked;
+                }
+                break;
+            case SDL_MOUSEBUTTONUP :
+                if ( event.button.button == SDL_BUTTON_LEFT )
+                {
+                    if(in_surface(event.button.x , event.button.y , btn_easy , position_btn_easy)){
+                        repeat = 0 ;
+                        choice = 1;
+                    }
+                    else if(in_surface(event.button.x , event.button.y , btn_medium , position_btn_medium)){
+                        repeat = 0 ;
+                        choice = 2;
+                    }
+                    else if(in_surface(event.button.x , event.button.y , btn_hard , position_btn_hard)){
+                        repeat = 0 ;
+                        choice = 3;
+                    }
+                    btn_hard = btn_medium = btn_easy = btn;
+                }
+
+                break;
+
+        }
+
+        SDL_BlitSurface(bg_img      , NULL, screen, &position             );
+        SDL_BlitSurface(btn_easy    , NULL, screen, &position_btn_easy    );
+        SDL_BlitSurface(btn_medium  , NULL, screen, &position_btn_medium  );
+        SDL_BlitSurface(btn_hard    , NULL, screen, &position_btn_hard    );
+        SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
+        SDL_BlitSurface(txt_choose  , NULL, screen, &position_txt_choose  );
+        SDL_BlitSurface(txt_easy    , NULL, screen, &position_txt_easy    );
+        SDL_BlitSurface(txt_medium  , NULL, screen, &position_txt_medium  );
+        SDL_BlitSurface(txt_hard    , NULL, screen, &position_txt_hard    );
+
+        SDL_Flip(screen);
+    }
+
+
+
     return choice;
 }
 
@@ -32,8 +159,8 @@ Grid main_menu(SDL_Surface * screen)
     SDL_Event event;
     TTF_Font *font  = NULL;
     TTF_Font *font1 = NULL;
-    SDL_Color couleurNoire = {0 , 0 , 0 };
-    SDL_Color couleurBlanc = {255,255,255};
+    SDL_Color color_black = {0 , 0 , 0 };
+    SDL_Color color_white = {255,255,255};
 
     unsigned short repeat = 1, choice;
 
@@ -45,7 +172,7 @@ Grid main_menu(SDL_Surface * screen)
     size.l=3;
     grid= create(size);
 
-        /** Loading images **/
+    /** Loading images **/
     if (! (bg_img      = IMG_Load("ressources/img/background.png"))){
         fprintf (stderr, "%s",SDL_GetError());
         exit (EXIT_FAILURE);
@@ -70,10 +197,10 @@ Grid main_menu(SDL_Surface * screen)
     }
 
     /**initializing texts**/
-    txt_title   = TTF_RenderText_Blended(font , "Sudoku"      , couleurNoire);
-    txt_newGame = TTF_RenderText_Blended(font1, "NEW GAME"    , couleurBlanc);
-    txt_loadGame= TTF_RenderText_Blended(font1, "LOAD GAME"   , couleurBlanc);
-    txt_exit    = TTF_RenderText_Blended(font1, "EXIT"        , couleurBlanc);
+    txt_title   = TTF_RenderText_Blended(font , "Sudoku"      , color_black);
+    txt_newGame = TTF_RenderText_Blended(font1, "NEW GAME"    , color_white);
+    txt_loadGame= TTF_RenderText_Blended(font1, "LOAD GAME"   , color_white);
+    txt_exit    = TTF_RenderText_Blended(font1, "EXIT"        , color_white);
 
     /**Setting everything positions **/
     position.x = 0;
