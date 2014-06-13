@@ -75,16 +75,16 @@ int levels_menu(SDL_Surface* screen)
     position_btn_hard.y=440;
 
     position_txt_title.x = screen->w/2 - txt_title->w/2;
-    position_txt_title.y = 60;
+    position_txt_title.y = 50;
 
-    position_txt_easy.x=200 +btn->w/2 - txt_easy->w/2;
-    position_txt_easy.y=260;
+    position_txt_easy.x=200+btn->w/2 - txt_easy->w/2;
+    position_txt_easy.y=240+btn->h/2 - txt_easy->h/2;;
 
     position_txt_medium.x=200+btn->w/2 - txt_medium->w/2;
-    position_txt_medium.y=360;
+    position_txt_medium.y=340+btn->h/2 - txt_medium->h/2;;
 
     position_txt_hard.x=200+btn->w/2 - txt_hard->w/2;
-    position_txt_hard.y=460;
+    position_txt_hard.y=440+btn->h/2 - txt_hard->h/2;;
 
 
     /** Displaying the menu **/
@@ -228,13 +228,13 @@ Grid main_menu(SDL_Surface * screen)
     position_txt_title.y = 50;
 
     position_txt_newGame.x=200+btn->w/2 - txt_newGame->w/2;
-    position_txt_newGame.y=250;
+    position_txt_newGame.y=230+btn->h/2 - txt_newGame->h/2;;
 
     position_txt_loadGame.x=200+btn->w/2 - txt_loadGame->w/2;
-    position_txt_loadGame.y=350;
+    position_txt_loadGame.y=330+btn->h/2 - txt_newGame->h/2;;
 
     position_txt_exit.x=200+btn->w/2 - txt_exit->w/2;
-    position_txt_exit.y=450;
+    position_txt_exit.y=430+btn->h/2 - txt_exit->h/2;;
 
 
     /** Displaying the menu **/
@@ -416,7 +416,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     position_btn_verify.y=400;
 
     position_txt_title.x = (screen->w - txt_title->w)/2;
-    position_txt_title.y = 10;
+    position_txt_title.y = 0;
 
     position_txt_save.x=520+btn->w/2 - txt_save->w/2;
     position_txt_save.y=320+btn->h/2 - txt_save->h/2;
