@@ -144,6 +144,10 @@ int levels_menu(SDL_Surface* screen)
         SDL_Flip(screen);
     }
 
+    SDL_FreeSurface(bg_img);
+    SDL_FreeSurface(btn);
+    SDL_FreeSurface(btn_clicked);
+
 
 
     return choice;
@@ -321,6 +325,12 @@ Grid main_menu(SDL_Surface * screen)
             }
             break;
     }
+
+
+    SDL_FreeSurface(bg_img);
+    SDL_FreeSurface(btn);
+    SDL_FreeSurface(btn_clicked);
+
     return grid;
 }
 void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl

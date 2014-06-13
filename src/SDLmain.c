@@ -80,6 +80,8 @@ int main() {
     a = main_menu(screen);
     game(&a,screen);
 
+    SDL_Quit();
+
 
 	return 0;
 }
