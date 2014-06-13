@@ -74,16 +74,16 @@ int levels_menu(SDL_Surface* screen)
     position_btn_hard.x=200;
     position_btn_hard.y=440;
 
-    position_txt_title.x = 250;
+    position_txt_title.x = screen->w/2 - txt_title->w/2;
     position_txt_title.y = 60;
 
-    position_txt_easy.x=350;
+    position_txt_easy.x=200 +btn->w/2 - txt_easy->w/2;
     position_txt_easy.y=260;
 
-    position_txt_medium.x=350;
+    position_txt_medium.x=200+btn->w/2 - txt_medium->w/2;
     position_txt_medium.y=360;
 
-    position_txt_hard.x=380;
+    position_txt_hard.x=200+btn->w/2 - txt_hard->w/2;
     position_txt_hard.y=460;
 
 
@@ -144,10 +144,15 @@ int levels_menu(SDL_Surface* screen)
         SDL_Flip(screen);
     }
 
+    /**Releasing memory**/
     SDL_FreeSurface(bg_img);
     SDL_FreeSurface(btn);
     SDL_FreeSurface(btn_clicked);
-
+    SDL_FreeSurface(txt_choose);
+    SDL_FreeSurface(txt_easy);
+    SDL_FreeSurface(txt_hard);
+    SDL_FreeSurface(txt_medium);
+    SDL_FreeSurface(txt_title);
 
 
     return choice;
@@ -219,16 +224,16 @@ Grid main_menu(SDL_Surface * screen)
     position_btn_exit.x=200;
     position_btn_exit.y=430;
 
-    position_txt_title.x = 250;
+    position_txt_title.x = screen->w/2 - txt_title->w/2;
     position_txt_title.y = 50;
 
-    position_txt_newGame.x=350;
+    position_txt_newGame.x=200+btn->w/2 - txt_newGame->w/2;
     position_txt_newGame.y=250;
 
-    position_txt_loadGame.x=350;
+    position_txt_loadGame.x=200+btn->w/2 - txt_loadGame->w/2;
     position_txt_loadGame.y=350;
 
-    position_txt_exit.x=380;
+    position_txt_exit.x=200+btn->w/2 - txt_exit->w/2;
     position_txt_exit.y=450;
 
 
@@ -326,51 +331,185 @@ Grid main_menu(SDL_Surface * screen)
             break;
     }
 
-
+    /**Releasing memory  **/
     SDL_FreeSurface(bg_img);
     SDL_FreeSurface(btn);
     SDL_FreeSurface(btn_clicked);
+    SDL_FreeSurface(txt_exit);
+    SDL_FreeSurface(txt_loadGame);
+    SDL_FreeSurface(txt_newGame);
+    SDL_FreeSurface(txt_title);
 
     return grid;
 }
 void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
-    unsigned short choice = 0;
     Coordinates coord;
     int number=0;
-    char *notice = NULL;
 
-    notice = malloc(sizeof(char));
-    notice [0] = '\0';
+    SDL_Surface *bg_img, *btn, *btn_clicked, *btn_save, *btn_verify, *btn_number[10], *txt_title,\
+                *txt_save, *txt_verify, *txt_number[10], *img_grid;
+    SDL_Rect position, position_btn_save, position_btn_verify, position_btn_number[10], position_txt_title,\
+             position_txt_save, position_txt_verify, position_txt_number[10], position_grid;
+    SDL_Event event;
+    TTF_Font *font_title  = NULL, *font_numbers = NULL;
+    TTF_Font *font_buttons = NULL;
+    SDL_Color color_black = {0 , 0 , 0 };
+    SDL_Color color_white = {255,255,255};
+
+    char str[2];
+
+    unsigned short repeat = 1, choice = 0, i;
+
+    /** Loading images **/
+    if (! (bg_img      = IMG_Load("ressources/img/background.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (! (btn         = IMG_Load("ressources/img/btnn.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(btn_clicked = IMG_Load("ressources/img/btn_clicked_s.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(img_grid    = IMG_Load("ressources/img/gridT.gif"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+
+    /**Loading fonts **/
+    if (!(font_title  = TTF_OpenFont ("ressources/fonts/SakiScript.otf"    , 130))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(font_buttons = TTF_OpenFont ("ressources/fonts/Eyes Believer.ttf" , 20 ))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(font_numbers = TTF_OpenFont ("ressources/fonts/Eyes Believer.ttf" , 15 ))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+
+    /**initializing texts**/
+    txt_title   = TTF_RenderText_Blended(font_title  , "Sudoku"      , color_black);
+    txt_save    = TTF_RenderText_Blended(font_buttons, "save"        , color_white);
+    txt_verify  = TTF_RenderText_Blended(font_buttons, "verify"      , color_white);
+    /*for (i = 0; i<10 ; i++){
+        sprintf(str,"%d",i);
+        txt_number[i] = TTF_RenderText_Blended(font_numbers, str, color_white);
+    }*/
+
+    /**Setting everything positions **/
+    position.x = 0;
+    position.y = 0;
+
+    position_grid.x = screen->w/2-img_grid->w/2-150;
+    position_grid.y = screen->h/2-img_grid->h/2+10;
+
+    position_btn_save.x=520;
+    position_btn_save.y=320;
+
+    position_btn_verify.x=520;
+    position_btn_verify.y=400;
+
+    position_txt_title.x = (screen->w - txt_title->w)/2;
+    position_txt_title.y = 10;
+
+    position_txt_save.x=520+btn->w/2 - txt_save->w/2;
+    position_txt_save.y=320+btn->h/2 - txt_save->h/2;
+
+    position_txt_verify.x=520+btn->w/2 - txt_verify->w/2;
+    position_txt_verify.y=400+btn->h/2 - txt_verify->h/2;
+
+    //TODO  : Set numbers positions
+
+
+    /** Displaying the game **/
+    btn_save = btn_verify = btn;
+    /*for (i = 0 ; i<10 ; i++)
+        btn_number[i] = btn_num;*/
+    /*** Program's main loop **/
+    while (repeat) /* TANT QUE la variable ne vaut pas 0 */
+    {
+        SDL_WaitEvent(&event); /* On attend un événement qu'on récupère dans event */
+        switch(event.type) /* On teste le type d'événement */
+        {
+            case SDL_QUIT: /* Si c'est un événement QUITTER */
+                repeat = 0; /* On met le booléen à 0, donc la boucle va s'arrêter */
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if (event.button.button == SDL_BUTTON_LEFT )
+                {
+                    if( in_surface(event.button.x , event.button.y , btn_save , position_btn_save))
+                        btn_save = btn_clicked;
+                    else if( in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify))
+                        btn_verify = btn_clicked;
+                    /*else for (i = 0 ; i<10 ; i++)
+                        if( in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
+                            btn_number[i] = btn_num_clicked;
+                            break;
+                        }*/
+                }
+                break;
+            case SDL_MOUSEBUTTONUP :
+                if ( event.button.button == SDL_BUTTON_LEFT )
+                {
+                    btn_save = btn_verify = btn;
+                    /*for (i=0; i<10 ; i++)
+                        btn_number[i] = btn_num; */
+
+                    if(in_surface(event.button.x , event.button.y , btn_save , position_btn_save)){
+                        //TODO : Save Game
+                    }
+                    else if(in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify)){
+                        //TODO : Verify
+                    }
+                    else for (i = 0 ; i<10 ; i++)
+                        if(in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
+                            //TODO : number is selected
+                            //Other numbers deselected
+                            break; //exit the for
+                        }
+
+                }
+                break;
+
+        }
+
+        //TODO : Compute which number button to be clicked
+
+        //TODO : Display the numbers in the grid
+
+        SDL_BlitSurface(bg_img      , NULL, screen, &position             );
+        SDL_BlitSurface(btn_save    , NULL, screen, &position_btn_save    );
+        SDL_BlitSurface(btn_verify  , NULL, screen, &position_btn_verify  );
+        SDL_BlitSurface(img_grid    , NULL, screen, &position_grid        );
+        SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
+        SDL_BlitSurface(txt_save    , NULL, screen, &position_txt_save    );
+        SDL_BlitSurface(txt_verify  , NULL, screen, &position_txt_verify  );
+        //TODO : blit the numbers
+
+        SDL_Flip(screen);
+    }
+
+    /**Free allocated memory**/
+    SDL_FreeSurface(bg_img);
+    SDL_FreeSurface(btn);
+    SDL_FreeSurface(btn_clicked);
+    SDL_FreeSurface(txt_save);
+    SDL_FreeSurface(txt_title);
+    SDL_FreeSurface(txt_verify);
 
     //In the game
-    while (1) {
-        clear();
-
-        //Displaying last notice :
-        if (strlen(notice) > 0 ){
-            printf(" [ ! ] %s ", notice);
-            notice[0] = '\0';
-        }
-        //showing the grid
-        printf("The grid : \n");
-        display_grid(*grid);
-
-        menu:
-        //Asking for next action
-        printf ("[?] What to do ? : \n");
-        printf (" 1 - Enter a number\n");
-        printf (" 2 - Edit a number\n");  ///need to update the data structure to know which numbers are editable and which are not
-        printf (" 3 - Save progress\n");
-        printf (" 0 - Quit\n");
-
-        scanf("%d",&choice);
+    while (0) { //TODO : Move this up !
 
         //Testing upon the choice
         switch (choice ){
             case 0 :        /// Quit
                 delete_grid(grid);              // Free allocated memory
-                free(notice);
                 exit(EXIT_SUCCESS);             //exit
                 break;
             case 1 :        /// Enter a number
@@ -395,8 +534,8 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
                 if (0 == *(grid->Grid[coord.x-1][coord.y-1].val))
                     *(grid->Grid[coord.x-1][coord.y-1].val) = number;
                 else{
-                    notice = realloc(notice , strlen("field is not empty, or is not editable\n")*sizeof(char));
-                    strcpy(notice,"field is not empty, or is not editable\n");
+                    /*notice = realloc(notice , strlen("field is not empty, or is not editable\n")*sizeof(char));
+                    strcpy(notice,"field is not empty, or is not editable\n");*/
                 }
                 break;
             case 2 :        /// Edit a number
@@ -420,18 +559,17 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
                 if (True)
                     *(grid->Grid[coord.x-1][coord.y-1].val) = number;
                 else{
-                    notice = realloc(notice , strlen("field is not editable\n")*sizeof(char));
-                    strcpy(notice,"field is not editable\n");
+                    /*notice = realloc(notice , strlen("field is not editable\n")*sizeof(char));
+                    strcpy(notice,"field is not editable\n");*/
                 }
                 break;
             case 3 :        /// Save progress
                     save(*grid);
-                    notice = realloc(notice , strlen("PROGRESS SAVED! \n")*sizeof(char));
-                    strcpy(notice,"PROGRESS SAVED! \n");
+                    /*notice = realloc(notice , strlen("PROGRESS SAVED! \n")*sizeof(char));
+                    strcpy(notice,"PROGRESS SAVED! \n");*/
                 break;
             default :       /// Wrong choice
                 printf("Wrong choice!\n");
-                goto menu;
                 break;
 
         }
