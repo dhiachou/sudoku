@@ -173,6 +173,7 @@ void fill_grid(Grid*A,int numero,char * file){
         if ('.'==cl) {
 
             *(A->Grid[row][column].val)=0;
+            A->Grid[row][column].editable = True;
         }
         else if (cl<='9' && cl > '0'){
 
