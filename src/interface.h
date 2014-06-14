@@ -16,10 +16,10 @@
 #ifdef USING_CONSOLE
 #include "game.h"
 #elif defined USING_SDL
-#include "SDLgame.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
+#include "SDLgame.h"
 int in_surface(Uint16 x , Uint16 y , SDL_Surface* btn , SDL_Rect position);
 #endif // USING_CONSOLE
 
