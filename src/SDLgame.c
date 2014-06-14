@@ -419,8 +419,8 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     position_grid.x = screen->w/2-img_grid->w/2-150;
     position_grid.y = screen->h/2-img_grid->h/2+10;
 
-    position_first_case.x = position_grid.x + 25;
-    position_first_case.y = position_grid.y + 25;
+    position_first_case.x = position_grid.x + 27;
+    position_first_case.y = position_grid.y + 26;
 
     position_btn_save.x=520;
     position_btn_save.y=320;
@@ -439,7 +439,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
     //Setting numbers positions
     for (i=0; i<10 ; i++){
-        position_btn_number[i].x = 10 + 45*i;
+        position_btn_number[i].x = 10 + btn_num->w*i;
         position_btn_number[i].y = screen->h - 50;
 
         position_txt_number[i].x = position_btn_number[i].x + (btn_num->w - txt_number[i]->w)/2;
