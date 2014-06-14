@@ -349,9 +349,9 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
     int selected_number = 0 ;
     SDL_Surface *bg_img, *btn, *btn_clicked, *btn_num, *btn_num_clicked, *btn_save, *btn_verify, *btn_number[10], *txt_title,\
-                *txt_save, *txt_verify, *txt_number[10], *img_grid;
+                *txt_save, *txt_verify, *txt_number[10], *txt_num, *img_grid;
     SDL_Rect position, position_btn_save, position_btn_verify, position_btn_number[10], position_txt_title,\
-             position_txt_save, position_txt_verify, position_txt_number[10], position_grid;
+             position_txt_save, position_txt_verify, position_txt_number[10], position_txt_num, position_grid, position_first_case;
     SDL_Event event;
     TTF_Font *font_title  = NULL, *font_numbers = NULL;
     TTF_Font *font_buttons = NULL;
@@ -360,7 +360,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
     char str[2];
 
-    unsigned short repeat = 1, choice = 0, i;
+    unsigned short repeat = 1, choice = 0, i, j;
 
     /** Loading images **/
     if (! (bg_img      = IMG_Load("ressources/img/background.png"))){
@@ -418,6 +418,9 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
     position_grid.x = screen->w/2-img_grid->w/2-150;
     position_grid.y = screen->h/2-img_grid->h/2+10;
+
+    position_first_case.x = position_grid.x + 25;
+    position_first_case.y = position_grid.y + 25;
 
     position_btn_save.x=520;
     position_btn_save.y=320;
@@ -503,12 +506,31 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
         btn_number[selected_number] = btn_num_clicked;
         printf("the selected number is : %d\n", selected_number);
 
-        //TODO : Display the numbers in the grid
 
+        /**Blitting surfaces**/
         SDL_BlitSurface(bg_img      , NULL, screen, &position             );
         SDL_BlitSurface(btn_save    , NULL, screen, &position_btn_save    );
         SDL_BlitSurface(btn_verify  , NULL, screen, &position_btn_verify  );
         SDL_BlitSurface(img_grid    , NULL, screen, &position_grid        );
+        // Display the numbers in the grid
+        for (i=0; i< grid->size.c; i++){
+            for (j=0; j<grid->size.l; j++){
+                //setting the text in the number
+                if (0 == *grid->Grid[i][j].val)
+                    sprintf(str, " ");
+                else
+                    sprintf(str, "%d", *grid->Grid[i][j].val);
+
+                txt_num = TTF_RenderText_Blended(font_numbers, str, color_black);
+                //setting the number's position
+                position_txt_num.x = position_first_case.x + i*btn_num->w + (btn_num->w - txt_num->w)/2;
+                position_txt_num.y = position_first_case.y + j*btn_num->h + (btn_num->h - txt_num->h)/2;
+
+                //blitting the number
+                SDL_BlitSurface(txt_num , NULL, screen, &position_txt_num);
+
+            }
+        }
         SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
         SDL_BlitSurface(txt_save    , NULL, screen, &position_txt_save    );
         SDL_BlitSurface(txt_verify  , NULL, screen, &position_txt_verify  );
@@ -532,6 +554,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     SDL_FreeSurface(txt_verify);
     for (i=0; i<10 ; i++)
         SDL_FreeSurface(txt_number[i]);
+    delete_grid(grid);
 
     //In the game
     while (0) { //TODO : Move this up !
