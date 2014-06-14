@@ -492,7 +492,13 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
                     }
                     else if(in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify)){
-                        //TODO : Verify
+                        //Verify
+                        if(verify_arena(*grid)==True)
+                            printf ("Congratulations ! \n");
+                        else
+                            printf ("Your solution is incorrect :( \n");
+
+                        //TODO : display notice ( correct  , or wrong )
                     }
                     else for (i = 0 ; i<10 ; i++)
                         if(in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){

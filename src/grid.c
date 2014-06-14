@@ -105,27 +105,27 @@ void display_grid(Grid a){
 }
 
 /**
-*   Tests whether the given  fiels verifies the conditions (columns, rows, square)
+*   Tests whether the given  field verifies the conditions (columns, rows, square)
 **/
 
 Boolean verify(Field k, Grid A ){
     int i=0, j=0;
     //verying columns
     for (i=0 ; i< A.size.c ; i++){
-        if (A.Grid[k.line][i].val == k.val && i != k.column) {
+        if (*A.Grid[k.line][i].val == *k.val && i != k.column) {
             return False ;
         }
     }
     //verifying lines
     for (i=0 ; i< A.size.l ; i++){
-        if (A.Grid[i][k.column].val == k.val && i != k.line) {
+        if (*A.Grid[i][k.column].val == *k.val && i != k.line) {
             return False ;
         }
     }
     //verifying squares
     for (i = k.square.x * sqrt(A.size.l) ; i< (k.square.x+1)* sqrt(A.size.l); i++){
         for (j=k.square.y * sqrt(A.size.c) ; j< (k.square.y+1)* sqrt(A.size.c); j++){
-            if ( (A.Grid[i][j].val== k.val) && (i != k.line) && ( j != k.column))
+            if ( (*A.Grid[i][j].val== *k.val) && (i != k.line) && ( j != k.column))
                 return False;
         }
     }
