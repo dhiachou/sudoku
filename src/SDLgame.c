@@ -342,7 +342,7 @@ Grid main_menu(SDL_Surface * screen)
 
     return grid;
 }
-void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
+void game (Grid * grid , SDL_Surface * screen){
 
     Coordinates coord;
     int number=0;
@@ -515,18 +515,15 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
                     //one of the number buttons is released?
                     else for (i = 0 ; i<10 ; i++){
                         if(in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
-                            //Affect the selected number with this number if possible TODO : test this
+                            //Affect the selected number with this number if possible
                             if (selected)
                                 if(grid->Grid[selected_number/grid->size.c][selected_number%grid->size.c].editable)
                                     *grid->Grid[selected_number/grid->size.c][selected_number%grid->size.c].val= i;
                             break; //exit the for
                         }
                     }
-
-
                 }
                 break;
-
         }
 
         //Compute which field in the grid is clicked
@@ -572,6 +569,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
             SDL_BlitSurface(txt_number[i]   , NULL, screen, &position_txt_number[i]);
         }
 
+        /**Update the screen **/
         SDL_Flip(screen);
     }
 
@@ -588,77 +586,6 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
         SDL_FreeSurface(txt_number[i]);
     delete_grid(grid);
 
-    //In the game
-    while (0) { //TODO : Delete this
-
-        //Testing upon the choice
-        switch (choice ){
-            case 0 :        /// Quit
-                delete_grid(grid);              // Free allocated memory
-                exit(EXIT_SUCCESS);             //exit
-                break;
-            case 1 :        /// Enter a number
-                coord_input:
-                printf("Enter coordinates seperated by a space (line column) : ");
-                scanf ("%d %d", &coord.x , &coord.y );
-
-                //Shall test the input (input data between 0 and max allowed values (right coordinates)
-                if (coord.x <=0 || coord.x> grid->size.c+1 || coord.y <=0 || coord.y>grid->size.l+1){
-                    printf("Wrong coordinates!\n");
-                    goto coord_input;
-                }
-
-                number_input:
-                printf("Enter the number to put in (%d,%d) : " ,coord.x, coord.y);
-                scanf("%d", &number);
-
-                //checking whether the number is correct
-                if (number <0 || number > grid->size.c)
-                    goto number_input;
-                //putting the number in the right place if it is a zero (AND EDITABLE! TODO )
-                if (0 == *(grid->Grid[coord.x-1][coord.y-1].val))
-                    *(grid->Grid[coord.x-1][coord.y-1].val) = number;
-                else{
-                    /*notice = realloc(notice , strlen("field is not empty, or is not editable\n")*sizeof(char));
-                    strcpy(notice,"field is not empty, or is not editable\n");*/
-                }
-                break;
-            case 2 :        /// Edit a number
-
-                coord_input2:
-                printf("Enter coordinates seperated by a space (line column) : ");
-                scanf ("%d %d", &coord.x , &coord.y );
-
-                //Shall test the input (input data between 0 and max allowed values (right coordinates)
-                if (coord.x <=0 || coord.x> grid->size.c+1 || coord.y <=0 || coord.y>grid->size.l+1)
-                    goto coord_input2;
-
-                number_input2:
-                printf("Enter the number to put in (%d,%d) : " ,coord.x, coord.y);
-                scanf("%d", &number);
-
-                //checking whether the number is correct
-                if (number <0 || number > grid->size.c)
-                    goto number_input2;
-                //putting the number in the right place if it is ( EDITABLE! TODO )
-                if (True)
-                    *(grid->Grid[coord.x-1][coord.y-1].val) = number;
-                else{
-                    /*notice = realloc(notice , strlen("field is not editable\n")*sizeof(char));
-                    strcpy(notice,"field is not editable\n");*/
-                }
-                break;
-            case 3 :        /// Save progress
-                    save(*grid);
-                    /*notice = realloc(notice , strlen("PROGRESS SAVED! \n")*sizeof(char));
-                    strcpy(notice,"PROGRESS SAVED! \n");*/
-                break;
-            default :       /// Wrong choice
-                printf("Wrong choice!\n");
-                break;
-
-        }
-    }
 }
 
 #endif
