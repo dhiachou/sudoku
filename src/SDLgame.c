@@ -347,6 +347,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     Coordinates coord;
     int number=0;
 
+    int selected_number = 0 ;
     SDL_Surface *bg_img, *btn, *btn_clicked, *btn_num, *btn_num_clicked, *btn_save, *btn_verify, *btn_number[10], *txt_title,\
                 *txt_save, *txt_verify, *txt_number[10], *img_grid;
     SDL_Rect position, position_btn_save, position_btn_verify, position_btn_number[10], position_txt_title,\
@@ -489,6 +490,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
                     else for (i = 0 ; i<10 ; i++)
                         if(in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
                             //TODO : number is selected
+                            selected_number = i;
                             //Other numbers deselected
                             break; //exit the for
                         }
@@ -499,6 +501,8 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
         }
 
         //TODO : Compute which number button is clicked
+        btn_number[selected_number] = btn_num_clicked;
+        printf("the selected number is : %d\n", selected_number);
 
         //TODO : Display the numbers in the grid
 
