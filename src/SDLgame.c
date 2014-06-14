@@ -355,8 +355,9 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     SDL_Event event;
     TTF_Font *font_title  = NULL, *font_numbers = NULL;
     TTF_Font *font_buttons = NULL;
-    SDL_Color color_black = {0 , 0 , 0 };
+    SDL_Color color_black = { 0 , 0 , 0 };
     SDL_Color color_white = {255,255,255};
+    SDL_Color color_blue  = { 0 , 0 ,255};
     Boolean selected = False;
     char str[2];
 
@@ -548,7 +549,11 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
                 else
                     sprintf(str, "%d", *grid->Grid[i][j].val);
 
-                txt_num = TTF_RenderText_Blended(font_numbers, str, color_black);
+                //the number will be blue if is editable , otherwise it is black
+                if (grid->Grid[i][j].editable)
+                    txt_num = TTF_RenderText_Blended(font_numbers, str, color_blue);
+                else
+                    txt_num = TTF_RenderText_Blended(font_numbers, str, color_black);
                 //setting the number's position
                 position_txt_num.x = position_first_case.x + i*btn_num->w + (btn_num->w - txt_num->w)/2;
                 position_txt_num.y = position_first_case.y + j*btn_num->h + (btn_num->h - txt_num->h)/2;
