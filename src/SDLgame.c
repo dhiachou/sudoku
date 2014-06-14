@@ -347,17 +347,17 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     Coordinates coord;
     int number=0;
 
-    int selected_number = 0 ;
+    int selected_number = 0 , last_selected_number = 0;
     SDL_Surface *bg_img, *btn, *btn_clicked, *btn_num, *btn_num_clicked, *btn_save, *btn_verify, *btn_number[10], *txt_title,\
                 *txt_save, *txt_verify, *txt_number[10], *txt_num, *img_grid;
-    SDL_Rect position, position_btn_save, position_btn_verify, position_btn_number[10], position_txt_title,\
+    SDL_Rect position, position_btn_save, position_btn_verify, position_btn_number[10], position_txt_title, position_selected,\
              position_txt_save, position_txt_verify, position_txt_number[10], position_txt_num, position_grid, position_first_case;
     SDL_Event event;
     TTF_Font *font_title  = NULL, *font_numbers = NULL;
     TTF_Font *font_buttons = NULL;
     SDL_Color color_black = {0 , 0 , 0 };
     SDL_Color color_white = {255,255,255};
-
+    Boolean selected = False;
     char str[2];
 
     unsigned short repeat = 1, choice = 0, i, j;
@@ -484,6 +484,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
                     for (i=0; i<10 ; i++)
                         btn_number[i] = btn_num;
 
+                    //Save game button released ?
                     if(in_surface(event.button.x , event.button.y , btn_save , position_btn_save)){
                         //Save Game
                         if (save(*grid))
@@ -491,6 +492,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
                         //TODO : display : game_saved
 
                     }
+                    //verify button released ?
                     else if(in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify)){
                         //Verify
                         if(verify_arena(*grid)==True)
@@ -500,28 +502,43 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
                         //TODO : display notice ( correct  , or wrong )
                     }
-                    else for (i = 0 ; i<10 ; i++)
+                    //one of the fields on the grid is pressed ?
+                    else if ((event.button.x < position_first_case.x + btn_num->w*grid->size.c ) && (event.button.x > position_first_case.x )\
+                         && ( event.button.y < position_first_case.y + btn_num->h*grid->size.l ) && (event.button.y > position_first_case.y)){
+                        last_selected_number = selected_number;
+                        selected_number = ((event.button.x - position_first_case.x)/btn_num->w) * grid->size.c + (event.button.y - position_first_case.y)/btn_num->h;
+                        selected = True;
+                        if (last_selected_number == selected_number)
+                            selected = False;
+                    }
+                    //one of the number buttons is released?
+                    else for (i = 0 ; i<10 ; i++){
                         if(in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
-                            // number is selected
-                            selected_number = i;
+                            //Affect the selected number with this number if possible TODO : test this
+                            if (selected)
+                                if(grid->Grid[selected_number/grid->size.c][selected_number%grid->size.c].editable)
+                                    *grid->Grid[selected_number/grid->size.c][selected_number%grid->size.c].val= i;
                             break; //exit the for
                         }
+                    }
+
 
                 }
                 break;
 
         }
 
-        //Compute which number button is clicked
-        btn_number[selected_number] = btn_num_clicked;
-        printf("the selected number is : %d\n", selected_number);
-
+        //Compute which field in the grid is clicked
+        //determining position
+        position_selected.x = position_first_case.x + (selected_number/grid->size.c)*btn_num->w  ;
+        position_selected.y = position_first_case.y + (selected_number%grid->size.c)*btn_num->h  ;
 
         /**Blitting surfaces**/
         SDL_BlitSurface(bg_img      , NULL, screen, &position             );
         SDL_BlitSurface(btn_save    , NULL, screen, &position_btn_save    );
         SDL_BlitSurface(btn_verify  , NULL, screen, &position_btn_verify  );
         SDL_BlitSurface(img_grid    , NULL, screen, &position_grid        );
+        if (selected )  SDL_BlitSurface(btn_num_clicked, NULL, screen, &position_selected);
         // Display the numbers in the grid
         for (i=0; i< grid->size.c; i++){
             for (j=0; j<grid->size.l; j++){
@@ -567,7 +584,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     delete_grid(grid);
 
     //In the game
-    while (0) { //TODO : Move this up !
+    while (0) { //TODO : Delete this
 
         //Testing upon the choice
         switch (choice ){
