@@ -485,7 +485,11 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
                         btn_number[i] = btn_num;
 
                     if(in_surface(event.button.x , event.button.y , btn_save , position_btn_save)){
-                        //TODO : Save Game
+                        //Save Game
+                        if (save(*grid))
+                            printf("Game saved! \n");
+                        //TODO : display : game_saved
+
                     }
                     else if(in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify)){
                         //TODO : Verify
