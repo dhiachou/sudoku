@@ -434,7 +434,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     position_txt_verify.x=520+btn->w/2 - txt_verify->w/2;
     position_txt_verify.y=400+btn->h/2 - txt_verify->h/2;
 
-    //Setting numbers positions //TODO : test it
+    //Setting numbers positions
     for (i=0; i<10 ; i++){
         position_btn_number[i].x = 10 + 45*i;
         position_btn_number[i].y = screen->h - 50;
@@ -489,9 +489,8 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
                     }
                     else for (i = 0 ; i<10 ; i++)
                         if(in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
-                            //TODO : number is selected
+                            // number is selected
                             selected_number = i;
-                            //Other numbers deselected
                             break; //exit the for
                         }
 
@@ -500,7 +499,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
         }
 
-        //TODO : Compute which number button is clicked
+        //Compute which number button is clicked
         btn_number[selected_number] = btn_num_clicked;
         printf("the selected number is : %d\n", selected_number);
 
@@ -513,7 +512,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
         SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
         SDL_BlitSurface(txt_save    , NULL, screen, &position_txt_save    );
         SDL_BlitSurface(txt_verify  , NULL, screen, &position_txt_verify  );
-        //TODO : blit the numbers
+        //blit the numbers
         for(i=0; i<10 ; i++){
             SDL_BlitSurface(btn_number[i]   , NULL, screen, &position_btn_number[i]);
             SDL_BlitSurface(txt_number[i]   , NULL, screen, &position_txt_number[i]);
