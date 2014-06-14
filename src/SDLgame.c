@@ -181,6 +181,9 @@ Grid main_menu(SDL_Surface * screen)
     size.l=3;
     grid= create(size);
 
+    /**Initializing randomize**/
+    init_randomizer();
+
     /** Loading images **/
     if (! (bg_img      = IMG_Load("ressources/img/background.png"))){
         fprintf (stderr, "%s",SDL_GetError());
@@ -342,6 +345,7 @@ Grid main_menu(SDL_Surface * screen)
 
     return grid;
 }
+
 void game (Grid * grid , SDL_Surface * screen){
 
     Coordinates coord;

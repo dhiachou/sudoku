@@ -151,20 +151,19 @@ int randomize(int n){
 /**
  * Loads a random ready to play Arena from File
  **/
-void fill_grid(Grid*A,int numero,char * file){
-
-     int c,cl,column=0,row=0;
-
+void fill_grid(Grid*A,int n,char * file){
+    int c,cl,column=0,row=0;
     FILE* fichier=NULL;
     fichier = fopen(file,"r");
 
     row=0;
-    /*boucle pour mettre le curseur dans la bonne position */
-    while (numero >1)
+
+    /*going to the correct line */
+    while (n >1)
     {
         c=fgetc(fichier);
         if (c=='\n')
-            numero--;
+            n--;
     }
 
     do {
@@ -181,9 +180,6 @@ void fill_grid(Grid*A,int numero,char * file){
             A->Grid[row][column].editable = False ;
         }
 
-
-   //     printf ("%d",*(A->Grid[row][column].val));
-
         column++;
         if (column==A->size.c)
         {
@@ -195,10 +191,10 @@ void fill_grid(Grid*A,int numero,char * file){
     }while (cl!='\n' && row!=A->size.l);
     printf ("\n");
 }
- /**
-   *  Deletes the arena and liberate the allocated memory
- **/
 
+/**
+ *  Deletes the grid and liberate the allocated memory
+ **/
 void delete_grid(Grid * grid){
     int i=0, j=0;
 	/*Liberating each field*/
