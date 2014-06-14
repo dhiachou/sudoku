@@ -14,7 +14,7 @@
 
 
 int main() {
-	Grid a ;
+	Grid grid ;
     TTF_Init();
 
     SDL_Surface *screen;
@@ -29,59 +29,14 @@ int main() {
     screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);  ///Load the window
     SDL_WM_SetCaption("Sudoku" , NULL);
 
+    /**Launching game**/
+    grid = main_menu(screen);   //opening main_menu
+    game(&grid,screen);         //opening the game window
 
-	/*Testing create function
-	printf("Enter size :");
-	scanf("%d",&size.c);
-	scanf("%d",&size.l);
-
-	a = create(size);
-
-	display_grid(a);
-
-	//*/
-
-	/*testing save function :
-	save(a,a);
-	//*/
-	/*Testing load function:
-	load(&a,&sol);
-
-	display_grid(a);
-
-	printf("\n\nSolution: \n");
-
-	display_grid(sol);
-	//*/
-
-
-	/*//Testing filling grid function:
-	printf("Enter size :");
-	scanf("%d",&size.c);
-	scanf("%d",&size.l);
-
-	a = create(size);
-
-    init_randomizer(); //shall be done only once!!
-    fill_grid(&a,randomize(20),"ressources/easy");
-
-    display_grid(a);//*/
-
-    /*// TESTING THE GAME FUNCTION
-    printf("Enter size :");
-	scanf("%d",&size.c);
-	scanf("%d",&size.l);
-    a = create(size),
-    game(&a);
-
-    //*/
-
-    a = main_menu(screen);
-    game(&a,screen);
-
+    /** Shutting down **/
     SDL_Quit();
 
 
-	return 0;
+	return EXIT_SUCCESS;
 }
 #endif
