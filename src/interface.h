@@ -70,15 +70,6 @@ void game(Grid * grid );
 
 Grid main_menu();
 
-#elif defined USING_SDL
-/**
- * GUI game function
- */
-void game(Grid * grid , SDL_Surface* screen);
-
-
-Grid main_menu(SDL_Surface * screen);
-
 #endif // USING_CONSOLE
 
 /**
