@@ -15,10 +15,10 @@
 
 int main() {
 	Grid grid ;
-    TTF_Init();
-
     SDL_Surface *screen;
-    SDL_Init(SDL_INIT_VIDEO);
+
+    /**Initializing SDL and its components**/
+    TTF_Init();
     if (SDL_Init(SDL_INIT_VIDEO)==-1)
     {
         fprintf (stderr, "%s",SDL_GetError());
