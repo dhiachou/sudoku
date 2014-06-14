@@ -14,8 +14,7 @@
 
 
 int main() {
-	Size size;
-	Grid a , sol;
+	Grid a ;
     TTF_Init();
 
     SDL_Surface *screen;

@@ -347,7 +347,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     Coordinates coord;
     int number=0;
 
-    SDL_Surface *bg_img, *btn, *btn_clicked, *btn_save, *btn_verify, *btn_number[10], *txt_title,\
+    SDL_Surface *bg_img, *btn, *btn_clicked, *btn_num, *btn_num_clicked, *btn_save, *btn_verify, *btn_number[10], *txt_title,\
                 *txt_save, *txt_verify, *txt_number[10], *img_grid;
     SDL_Rect position, position_btn_save, position_btn_verify, position_btn_number[10], position_txt_title,\
              position_txt_save, position_txt_verify, position_txt_number[10], position_grid;
@@ -378,6 +378,14 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
         fprintf (stderr, "%s",SDL_GetError());
         exit (EXIT_FAILURE);
     }
+    if (!(btn_num_clicked= IMG_Load("ressources/img/btn_clicked_num.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
+    if (!(btn_num= IMG_Load("ressources/img/btn_num.png"))){
+        fprintf (stderr, "%s",SDL_GetError());
+        exit (EXIT_FAILURE);
+    }
 
     /**Loading fonts **/
     if (!(font_title  = TTF_OpenFont ("ressources/fonts/SakiScript.otf"    , 130))){
@@ -397,10 +405,11 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     txt_title   = TTF_RenderText_Blended(font_title  , "Sudoku"      , color_black);
     txt_save    = TTF_RenderText_Blended(font_buttons, "save"        , color_white);
     txt_verify  = TTF_RenderText_Blended(font_buttons, "verify"      , color_white);
-    /*for (i = 0; i<10 ; i++){
+    txt_number[0] = TTF_RenderText_Blended(font_numbers, "-"         , color_white);
+    for (i = 1; i<10 ; i++){
         sprintf(str,"%d",i);
         txt_number[i] = TTF_RenderText_Blended(font_numbers, str, color_white);
-    }*/
+    }
 
     /**Setting everything positions **/
     position.x = 0;
@@ -424,42 +433,52 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     position_txt_verify.x=520+btn->w/2 - txt_verify->w/2;
     position_txt_verify.y=400+btn->h/2 - txt_verify->h/2;
 
-    //TODO  : Set numbers positions
+    //Setting numbers positions //TODO : test it
+    for (i=0; i<10 ; i++){
+        position_btn_number[i].x = 10 + 45*i;
+        position_btn_number[i].y = screen->h - 50;
+
+        position_txt_number[i].x = position_btn_number[i].x + (btn_num->w - txt_number[i]->w)/2;
+        position_txt_number[i].y = position_btn_number[i].y + (btn_num->h - txt_number[i]->h)/2;
+    }
 
 
     /** Displaying the game **/
     btn_save = btn_verify = btn;
-    /*for (i = 0 ; i<10 ; i++)
-        btn_number[i] = btn_num;*/
+    for (i = 0 ; i<10 ; i++)
+        btn_number[i] = btn_num;
     /*** Program's main loop **/
-    while (repeat) /* TANT QUE la variable ne vaut pas 0 */
+    while (repeat)
     {
-        SDL_WaitEvent(&event); /* On attend un événement qu'on récupère dans event */
-        switch(event.type) /* On teste le type d'événement */
+        SDL_WaitEvent(&event); /* waiting for event and getting it in event variable */
+        switch(event.type) /* testing event's type */
         {
-            case SDL_QUIT: /* Si c'est un événement QUITTER */
-                repeat = 0; /* On met le booléen à 0, donc la boucle va s'arrêter */
+            case SDL_QUIT: /* if it is a quit event */
+                repeat = 0; /* we wont loop anymore */
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 if (event.button.button == SDL_BUTTON_LEFT )
                 {
+                    //Depending on the position of the mouse click, we "press" the button where the cursor is
                     if( in_surface(event.button.x , event.button.y , btn_save , position_btn_save))
                         btn_save = btn_clicked;
                     else if( in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify))
                         btn_verify = btn_clicked;
-                    /*else for (i = 0 ; i<10 ; i++)
+                    else for (i = 0 ; i<10 ; i++){
                         if( in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
                             btn_number[i] = btn_num_clicked;
                             break;
-                        }*/
+                        }
+                    }
                 }
                 break;
             case SDL_MOUSEBUTTONUP :
                 if ( event.button.button == SDL_BUTTON_LEFT )
                 {
+                    //All buttons are back to the normal situation (nothing is pressed)
                     btn_save = btn_verify = btn;
-                    /*for (i=0; i<10 ; i++)
-                        btn_number[i] = btn_num; */
+                    for (i=0; i<10 ; i++)
+                        btn_number[i] = btn_num;
 
                     if(in_surface(event.button.x , event.button.y , btn_save , position_btn_save)){
                         //TODO : Save Game
@@ -479,7 +498,7 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
 
         }
 
-        //TODO : Compute which number button to be clicked
+        //TODO : Compute which number button is clicked
 
         //TODO : Display the numbers in the grid
 
@@ -491,6 +510,10 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
         SDL_BlitSurface(txt_save    , NULL, screen, &position_txt_save    );
         SDL_BlitSurface(txt_verify  , NULL, screen, &position_txt_verify  );
         //TODO : blit the numbers
+        for(i=0; i<10 ; i++){
+            SDL_BlitSurface(btn_number[i]   , NULL, screen, &position_btn_number[i]);
+            SDL_BlitSurface(txt_number[i]   , NULL, screen, &position_txt_number[i]);
+        }
 
         SDL_Flip(screen);
     }
@@ -499,9 +522,13 @@ void game (Grid * grid , SDL_Surface * screen){ //TODO : make it with sdl
     SDL_FreeSurface(bg_img);
     SDL_FreeSurface(btn);
     SDL_FreeSurface(btn_clicked);
+    SDL_FreeSurface(btn_num);
+    SDL_FreeSurface(btn_num_clicked);
     SDL_FreeSurface(txt_save);
     SDL_FreeSurface(txt_title);
     SDL_FreeSurface(txt_verify);
+    for (i=0; i<10 ; i++)
+        SDL_FreeSurface(txt_number[i]);
 
     //In the game
     while (0) { //TODO : Move this up !
