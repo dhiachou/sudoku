@@ -593,7 +593,10 @@ void game (Grid * grid , SDL_Surface * screen){
         SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
         SDL_BlitSurface(txt_save    , NULL, screen, &position_txt_save    );
         SDL_BlitSurface(txt_verify  , NULL, screen, &position_txt_verify  );
-        if (notice)    SDL_BlitSurface(txt_notice,NULL,screen,&position_txt_notice);
+        if (notice) {
+            SDL_BlitSurface(txt_notice,NULL,screen,&position_txt_notice);
+            SDL_FreeSurface(txt_notice);
+        }
         //blit the numbers
         for(i=0; i<10 ; i++){
             SDL_BlitSurface(btn_number[i]   , NULL, screen, &position_btn_number[i]);
