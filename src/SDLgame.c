@@ -562,6 +562,9 @@ void game (Grid * grid , SDL_Surface * screen){
                 //blitting the number
                 SDL_BlitSurface(txt_num , NULL, screen, &position_txt_num);
 
+                //releasing memory occupied by that number
+                SDL_FreeSurface(txt_num);
+
             }
         }
         SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
