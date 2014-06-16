@@ -353,16 +353,18 @@ void game (Grid * grid , SDL_Surface * screen){
 
     int selected_number = 0 , last_selected_number = 0;
     SDL_Surface *bg_img, *btn, *btn_clicked, *btn_num, *btn_num_clicked, *btn_save, *btn_verify, *btn_number[10], *txt_title,\
-                *txt_save, *txt_verify, *txt_number[10], *txt_num, *img_grid;
+                *txt_save, *txt_verify, *txt_number[10], *txt_num, *txt_notice, *img_grid;
     SDL_Rect position, position_btn_save, position_btn_verify, position_btn_number[10], position_txt_title, position_selected,\
-             position_txt_save, position_txt_verify, position_txt_number[10], position_txt_num, position_grid, position_first_case;
+             position_txt_save, position_txt_verify, position_txt_number[10], position_txt_num, position_grid, position_first_case,\
+             position_txt_notice, position_txt_notice_i;
     SDL_Event event;
     TTF_Font *font_title  = NULL, *font_numbers = NULL;
     TTF_Font *font_buttons = NULL;
     SDL_Color color_black = { 0 , 0 , 0 };
     SDL_Color color_white = {255,255,255};
     SDL_Color color_blue  = { 0 , 0 ,255};
-    Boolean selected = False;
+    SDL_Color color_red   = {255, 0 , 0 };
+    Boolean selected = False, notice = False;
     char str[2];
 
     unsigned short repeat = 1, choice = 0, i, j;
@@ -409,8 +411,8 @@ void game (Grid * grid , SDL_Surface * screen){
 
     /**initializing texts**/
     txt_title   = TTF_RenderText_Blended(font_title  , "Sudoku"      , color_black);
-    txt_save    = TTF_RenderText_Blended(font_buttons, "save"        , color_white);
-    txt_verify  = TTF_RenderText_Blended(font_buttons, "verify"      , color_white);
+    txt_save    = TTF_RenderText_Blended(font_buttons, "Save"        , color_white);
+    txt_verify  = TTF_RenderText_Blended(font_buttons, "Verify"      , color_white);
     txt_number[0] = TTF_RenderText_Blended(font_numbers, "-"         , color_white);
     for (i = 1; i<10 ; i++){
         sprintf(str,"%d",i);
@@ -435,6 +437,9 @@ void game (Grid * grid , SDL_Surface * screen){
 
     position_txt_title.x = (screen->w - txt_title->w)/2;
     position_txt_title.y = 0;
+
+    position_txt_notice_i.x=520;
+    position_txt_notice_i.y=250;
 
     position_txt_save.x=520+btn->w/2 - txt_save->w/2;
     position_txt_save.y=320+btn->h/2 - txt_save->h/2;
@@ -484,6 +489,8 @@ void game (Grid * grid , SDL_Surface * screen){
             case SDL_MOUSEBUTTONUP :
                 if ( event.button.button == SDL_BUTTON_LEFT )
                 {
+                    //there is no more notice
+                    notice = False;
                     //All buttons are back to the normal situation (nothing is pressed)
                     btn_save = btn_verify = btn;
                     for (i=0; i<10 ; i++)
@@ -492,20 +499,36 @@ void game (Grid * grid , SDL_Surface * screen){
                     //Save game button released ?
                     if(in_surface(event.button.x , event.button.y , btn_save , position_btn_save)){
                         //Save Game
-                        if (save(*grid))
+                        if (save(*grid)){
                             printf("Game saved! \n");
-                        //TODO : display : game_saved
+                            txt_notice = TTF_RenderText_Blended(font_numbers,"Game saved!",color_black);
+                            position_txt_notice.x = position_txt_notice_i.x + txt_notice->w/2 ;
+                            position_txt_notice.y = position_txt_notice_i.y - txt_notice->h/2 ;
 
+                            notice = True;
+                        }
                     }
                     //verify button released ?
                     else if(in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify)){
                         //Verify
-                        if(verify_arena(*grid)==True)
+                        if(verify_arena(*grid)==True){
                             printf ("Congratulations ! \n");
-                        else
-                            printf ("Your solution is incorrect :( \n");
+                            txt_notice = TTF_RenderText_Blended(font_buttons,"Congratulations!",color_red);
+                            position_txt_notice.x = position_txt_notice_i.x + txt_notice->w/2 ;
+                            position_txt_notice.y = position_txt_notice_i.y - txt_notice->h/2 ;
 
-                        //TODO : display notice ( correct  , or wrong )
+                            notice = True;
+                        }
+                        else
+                        {
+                            printf ("Your solution is incorrect :( \n");
+                            txt_notice = TTF_RenderText_Blended(font_buttons,"wrong solution",color_black);
+                            position_txt_notice.x = position_txt_notice_i.x + txt_notice->w/2 ;
+                            position_txt_notice.y = position_txt_notice_i.y - txt_notice->h/2 ;
+
+                            notice = True;
+                        }
+
                     }
                     //one of the fields on the grid is pressed ?
                     else if ((event.button.x < position_first_case.x + btn_num->w*grid->size.c ) && (event.button.x > position_first_case.x )\
@@ -570,6 +593,7 @@ void game (Grid * grid , SDL_Surface * screen){
         SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
         SDL_BlitSurface(txt_save    , NULL, screen, &position_txt_save    );
         SDL_BlitSurface(txt_verify  , NULL, screen, &position_txt_verify  );
+        if (notice)    SDL_BlitSurface(txt_notice,NULL,screen,&position_txt_notice);
         //blit the numbers
         for(i=0; i<10 ; i++){
             SDL_BlitSurface(btn_number[i]   , NULL, screen, &position_btn_number[i]);
