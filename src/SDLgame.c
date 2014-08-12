@@ -21,6 +21,8 @@ int levels_menu(SDL_Surface* screen)
     SDL_Color color_black = {0 , 0 , 0 };
     SDL_Color color_white = {255,255,255};
 
+    int fps_regulator = 0 ;
+
     unsigned short repeat = 1, choice = 0;
 
     /** Loading images **/
@@ -86,13 +88,14 @@ int levels_menu(SDL_Surface* screen)
     position_txt_hard.x=200+btn->w/2 - txt_hard->w/2;
     position_txt_hard.y=440+btn->h/2 - txt_hard->h/2;;
 
-
+    ///initializing fps regulator
+    fps_regulator = SDL_GetTicks();
     /** Displaying the menu **/
     btn_hard = btn_easy = btn_medium = btn;
     /*** Program's main loop **/
     while (repeat) /* TANT QUE la variable ne vaut pas 0 */
     {
-        SDL_WaitEvent(&event); /* On attend un événement qu'on récupère dans event */
+        if (SDL_PollEvent(&event) )
         switch(event.type) /* On teste le type d'événement */
         {
             case SDL_QUIT: /* Si c'est un événement QUITTER */
@@ -130,18 +133,20 @@ int levels_menu(SDL_Surface* screen)
                 break;
 
         }
+        if(time_elapsed(fps_regulator,16)){
+            fps_regulator = SDL_GetTicks(); //updating the timer
+            SDL_BlitSurface(bg_img      , NULL, screen, &position             );
+            SDL_BlitSurface(btn_easy    , NULL, screen, &position_btn_easy    );
+            SDL_BlitSurface(btn_medium  , NULL, screen, &position_btn_medium  );
+            SDL_BlitSurface(btn_hard    , NULL, screen, &position_btn_hard    );
+            SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
+            SDL_BlitSurface(txt_choose  , NULL, screen, &position_txt_choose  );
+            SDL_BlitSurface(txt_easy    , NULL, screen, &position_txt_easy    );
+            SDL_BlitSurface(txt_medium  , NULL, screen, &position_txt_medium  );
+            SDL_BlitSurface(txt_hard    , NULL, screen, &position_txt_hard    );
 
-        SDL_BlitSurface(bg_img      , NULL, screen, &position             );
-        SDL_BlitSurface(btn_easy    , NULL, screen, &position_btn_easy    );
-        SDL_BlitSurface(btn_medium  , NULL, screen, &position_btn_medium  );
-        SDL_BlitSurface(btn_hard    , NULL, screen, &position_btn_hard    );
-        SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
-        SDL_BlitSurface(txt_choose  , NULL, screen, &position_txt_choose  );
-        SDL_BlitSurface(txt_easy    , NULL, screen, &position_txt_easy    );
-        SDL_BlitSurface(txt_medium  , NULL, screen, &position_txt_medium  );
-        SDL_BlitSurface(txt_hard    , NULL, screen, &position_txt_hard    );
-
-        SDL_Flip(screen);
+            SDL_Flip(screen);
+        }
     }
 
     /**Releasing memory**/
@@ -160,7 +165,7 @@ int levels_menu(SDL_Surface* screen)
 
 Grid main_menu(SDL_Surface * screen)
 {
-    int diff=0,n=0;
+    int diff=0,n=0, fps_regulator = 0;
     SDL_Surface *bg_img, *btn, *btn_clicked, *btn_exit, *btn_newGame, *btn_loadGame, *txt_title,\
                 *txt_newGame, *txt_loadGame, *txt_exit ;
     SDL_Rect position, position_btn_newGame, position_btn_loadGame, position_btn_exit, position_txt_title,\
@@ -240,12 +245,14 @@ Grid main_menu(SDL_Surface * screen)
     position_txt_exit.y=430+btn->h/2 - txt_exit->h/2;;
 
 
+    /// initializing fps regulator
+    fps_regulator = SDL_GetTicks();
     /** Displaying the menu **/
     btn_exit = btn_newGame = btn_loadGame = btn;
     /*** Program's main loop **/
     while (repeat) /* TANT QUE la variable ne vaut pas 0 */
     {
-        SDL_WaitEvent(&event); /* On attend un événement qu'on récupère dans event */
+        if (SDL_PollEvent(&event))// if an event is caught we treat it
         switch(event.type) /* On teste le type d'événement */
         {
             case SDL_QUIT: /* Si c'est un événement QUITTER */
@@ -284,16 +291,20 @@ Grid main_menu(SDL_Surface * screen)
 
         }
 
-        SDL_BlitSurface(bg_img      , NULL, screen, &position                );
-        SDL_BlitSurface(btn_newGame , NULL, screen, &position_btn_newGame    );
-        SDL_BlitSurface(btn_loadGame, NULL, screen, &position_btn_loadGame   );
-        SDL_BlitSurface(btn_exit    , NULL, screen, &position_btn_exit       );
-        SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title      );
-        SDL_BlitSurface(txt_newGame , NULL, screen, &position_txt_newGame    );
-        SDL_BlitSurface(txt_loadGame, NULL, screen, &position_txt_loadGame   );
-        SDL_BlitSurface(txt_exit    , NULL, screen, &position_txt_exit       );
+        if(time_elapsed(fps_regulator,16)){
+            fps_regulator = SDL_GetTicks(); //updating the timer
 
-        SDL_Flip(screen);
+            SDL_BlitSurface(bg_img      , NULL, screen, &position                );
+            SDL_BlitSurface(btn_newGame , NULL, screen, &position_btn_newGame    );
+            SDL_BlitSurface(btn_loadGame, NULL, screen, &position_btn_loadGame   );
+            SDL_BlitSurface(btn_exit    , NULL, screen, &position_btn_exit       );
+            SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title      );
+            SDL_BlitSurface(txt_newGame , NULL, screen, &position_txt_newGame    );
+            SDL_BlitSurface(txt_loadGame, NULL, screen, &position_txt_loadGame   );
+            SDL_BlitSurface(txt_exit    , NULL, screen, &position_txt_exit       );
+
+            SDL_Flip(screen);
+        }
     }
 
     switch(choice)
@@ -351,7 +362,8 @@ void game (Grid * grid , SDL_Surface * screen){
     Coordinates coord;
     int number=0;
 
-    int selected_number = 0 , last_selected_number = 0, initial_time = 0;
+    int selected_number = 0 , last_selected_number = 0;
+    int fps_regulator = 0, initial_time = 0;
     SDL_Surface *bg_img, *btn, *btn_clicked, *btn_num, *btn_num_clicked, *btn_save, *btn_verify, *btn_number[10], *txt_title,\
                 *txt_save, *txt_verify, *txt_number[10], *txt_num, *txt_notice, *img_grid;
     SDL_Rect position, position_btn_save, position_btn_verify, position_btn_number[10], position_txt_title, position_selected,\
@@ -456,161 +468,166 @@ void game (Grid * grid , SDL_Surface * screen){
         position_txt_number[i].y = position_btn_number[i].y + (btn_num->h - txt_number[i]->h)/2;
     }
 
-
     /** Displaying the game **/
     btn_save = btn_verify = btn;
     for (i = 0 ; i<10 ; i++)
         btn_number[i] = btn_num;
+    /// initializing fps regulator
+    fps_regulator = SDL_GetTicks();
     /*** Program's main loop **/
     while (repeat)
     {
-        SDL_WaitEvent(&event); /* waiting for event and getting it in event variable */
-        switch(event.type) /* testing event's type */
-        {
-            case SDL_QUIT: /* if it is a quit event */
-                repeat = 0; /* we wont loop anymore */
-                break;
-            case SDL_MOUSEBUTTONDOWN:
-                if (event.button.button == SDL_BUTTON_LEFT )
-                {
-                    //Depending on the position of the mouse click, we "press" the button where the cursor is
-                    if( in_surface(event.button.x , event.button.y , btn_save , position_btn_save))
-                        btn_save = btn_clicked;
-                    else if( in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify))
-                        btn_verify = btn_clicked;
-                    else for (i = 0 ; i<10 ; i++){
-                        if( in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
-                            btn_number[i] = btn_num_clicked;
-                            break;
+        if(SDL_PollEvent(&event)) {
+            switch(event.type) /* testing event's type */
+            {
+                case SDL_QUIT: /* if it is a quit event */
+                    repeat = 0; /* we wont loop anymore */
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    if (event.button.button == SDL_BUTTON_LEFT )
+                    {
+                        //Depending on the position of the mouse click, we "press" the button where the cursor is
+                        if( in_surface(event.button.x , event.button.y , btn_save , position_btn_save))
+                            btn_save = btn_clicked;
+                        else if( in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify))
+                            btn_verify = btn_clicked;
+                        else for (i = 0 ; i<10 ; i++){
+                            if( in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
+                                btn_number[i] = btn_num_clicked;
+                                break;
+                            }
                         }
                     }
-                }
-                break;
-            case SDL_MOUSEBUTTONUP :
-                if ( event.button.button == SDL_BUTTON_LEFT )
-                {
-                    //there is no more notice
-                    notice = False;
-                    //All buttons are back to the normal situation (nothing is pressed)
-                    btn_save = btn_verify = btn;
-                    for (i=0; i<10 ; i++)
-                        btn_number[i] = btn_num;
+                    break;
+                case SDL_MOUSEBUTTONUP :
+                    if ( event.button.button == SDL_BUTTON_LEFT )
+                    {
+                        //there is no more notice
+                        notice = False;
+                        //All buttons are back to the normal situation (nothing is pressed)
+                        btn_save = btn_verify = btn;
+                        for (i=0; i<10 ; i++)
+                            btn_number[i] = btn_num;
 
-                    //Save game button released ?
-                    if(in_surface(event.button.x , event.button.y , btn_save , position_btn_save)){
-                        //Save Game
-                        if (save(*grid)){
-                            printf("Game saved! \n");
-                            txt_notice = TTF_RenderText_Blended(font_numbers,"Game saved!",color_black);
-                            position_txt_notice.x = position_txt_notice_i.x + txt_notice->w/2 ;
-                            position_txt_notice.y = position_txt_notice_i.y - txt_notice->h/2 ;
+                        //Save game button released ?
+                        if(in_surface(event.button.x , event.button.y , btn_save , position_btn_save)){
+                            //Save Game
+                            if (save(*grid)){
+                                printf("Game saved! \n");
+                                txt_notice = TTF_RenderText_Blended(font_numbers,"Game saved!",color_black);
+                                position_txt_notice.x = position_txt_notice_i.x + txt_notice->w/2 ;
+                                position_txt_notice.y = position_txt_notice_i.y - txt_notice->h/2 ;
 
-                            notice = True;
+                                notice = True;
+                            }
+                        }
+                        //verify button released ?
+                        else if(in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify)){
+                            //Verify
+                            if(verify_arena(*grid)==True){
+                                printf ("Congratulations ! \n");
+                                txt_notice = TTF_RenderText_Blended(font_buttons,"Congratulations!",color_red);
+                                position_txt_notice.x = position_txt_notice_i.x + txt_notice->w/2 ;
+                                position_txt_notice.y = position_txt_notice_i.y - txt_notice->h/2 ;
+
+                                notice = True;
+                            }
+                            else
+                            {
+                                printf ("Your solution is incorrect :( \n");
+                                txt_notice = TTF_RenderText_Blended(font_buttons,"wrong solution",color_black);
+                                position_txt_notice.x = position_txt_notice_i.x + txt_notice->w/2 ;
+                                position_txt_notice.y = position_txt_notice_i.y - txt_notice->h/2 ;
+
+                                notice = True;
+                            }
+
+                        }
+                        //one of the fields on the grid is pressed ?
+                        else if ((event.button.x < position_first_case.x + btn_num->w*grid->size.c ) && (event.button.x > position_first_case.x )\
+                             && ( event.button.y < position_first_case.y + btn_num->h*grid->size.l ) && (event.button.y > position_first_case.y)){
+                            last_selected_number = selected_number;
+                            selected_number = ((event.button.x - position_first_case.x)/btn_num->w) * grid->size.c + (event.button.y - position_first_case.y)/btn_num->h;
+                            selected = True;
+                            if (last_selected_number == selected_number)
+                                selected = False;
+                        }
+                        //one of the number buttons is released?
+                        else for (i = 0 ; i<10 ; i++){
+                            if(in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
+                                //Affect the selected number with this number if possible
+                                if (selected)
+                                    if(grid->Grid[selected_number/grid->size.c][selected_number%grid->size.c].editable)
+                                        *grid->Grid[selected_number/grid->size.c][selected_number%grid->size.c].val= i;
+                                break; //exit the for
+                            }
                         }
                     }
-                    //verify button released ?
-                    else if(in_surface(event.button.x , event.button.y , btn_verify , position_btn_verify)){
-                        //Verify
-                        if(verify_arena(*grid)==True){
-                            printf ("Congratulations ! \n");
-                            txt_notice = TTF_RenderText_Blended(font_buttons,"Congratulations!",color_red);
-                            position_txt_notice.x = position_txt_notice_i.x + txt_notice->w/2 ;
-                            position_txt_notice.y = position_txt_notice_i.y - txt_notice->h/2 ;
-
-                            notice = True;
-                        }
-                        else
-                        {
-                            printf ("Your solution is incorrect :( \n");
-                            txt_notice = TTF_RenderText_Blended(font_buttons,"wrong solution",color_black);
-                            position_txt_notice.x = position_txt_notice_i.x + txt_notice->w/2 ;
-                            position_txt_notice.y = position_txt_notice_i.y - txt_notice->h/2 ;
-
-                            notice = True;
-                        }
-
-                    }
-                    //one of the fields on the grid is pressed ?
-                    else if ((event.button.x < position_first_case.x + btn_num->w*grid->size.c ) && (event.button.x > position_first_case.x )\
-                         && ( event.button.y < position_first_case.y + btn_num->h*grid->size.l ) && (event.button.y > position_first_case.y)){
-                        last_selected_number = selected_number;
-                        selected_number = ((event.button.x - position_first_case.x)/btn_num->w) * grid->size.c + (event.button.y - position_first_case.y)/btn_num->h;
-                        selected = True;
-                        if (last_selected_number == selected_number)
-                            selected = False;
-                    }
-                    //one of the number buttons is released?
-                    else for (i = 0 ; i<10 ; i++){
-                        if(in_surface(event.button.x , event.button.y , btn_number[i] , position_btn_number[i])){
-                            //Affect the selected number with this number if possible
-                            if (selected)
-                                if(grid->Grid[selected_number/grid->size.c][selected_number%grid->size.c].editable)
-                                    *grid->Grid[selected_number/grid->size.c][selected_number%grid->size.c].val= i;
-                            break; //exit the for
-                        }
-                    }
-                }
-                break;
+                    break;
+            }
         }
-
         //Compute which field in the grid is clicked
         //determining position
         position_selected.x = position_first_case.x + (selected_number/grid->size.c)*btn_num->w  ;
         position_selected.y = position_first_case.y + (selected_number%grid->size.c)*btn_num->h  ;
 
-        /**Blitting surfaces**/
-        SDL_BlitSurface(bg_img      , NULL, screen, &position             );
-        SDL_BlitSurface(btn_save    , NULL, screen, &position_btn_save    );
-        SDL_BlitSurface(btn_verify  , NULL, screen, &position_btn_verify  );
-        SDL_BlitSurface(img_grid    , NULL, screen, &position_grid        );
-        if (selected )  SDL_BlitSurface(btn_num_clicked, NULL, screen, &position_selected);
-        // Display the numbers in the grid
-        for (i=0; i< grid->size.c; i++){
-            for (j=0; j<grid->size.l; j++){
-                //setting the text in the number
-                if (0 == *grid->Grid[i][j].val)
-                    sprintf(str, " ");
-                else
-                    sprintf(str, "%d", *grid->Grid[i][j].val);
+        /** Regulating to 60 fps */
+        if(time_elapsed(fps_regulator,16)){
+            fps_regulator = SDL_GetTicks(); //updating the timer
+            /**Blitting surfaces**/
+            SDL_BlitSurface(bg_img      , NULL, screen, &position             );
+            SDL_BlitSurface(btn_save    , NULL, screen, &position_btn_save    );
+            SDL_BlitSurface(btn_verify  , NULL, screen, &position_btn_verify  );
+            SDL_BlitSurface(img_grid    , NULL, screen, &position_grid        );
+            if (selected )  SDL_BlitSurface(btn_num_clicked, NULL, screen, &position_selected);
+            // Display the numbers in the grid
+            for (i=0; i< grid->size.c; i++){
+                for (j=0; j<grid->size.l; j++){
+                    //setting the text in the number
+                    if (0 == *grid->Grid[i][j].val)
+                        sprintf(str, " ");
+                    else
+                        sprintf(str, "%d", *grid->Grid[i][j].val);
 
-                //the number will be blue if is editable , otherwise it is black
-                if (grid->Grid[i][j].editable)
-                    txt_num = TTF_RenderText_Blended(font_numbers, str, color_blue);
-                else
-                    txt_num = TTF_RenderText_Blended(font_numbers, str, color_black);
-                //setting the number's position
-                position_txt_num.x = position_first_case.x + i*btn_num->w + (btn_num->w - txt_num->w)/2;
-                position_txt_num.y = position_first_case.y + j*btn_num->h + (btn_num->h - txt_num->h)/2;
+                    //the number will be blue if is editable , otherwise it is black
+                    if (grid->Grid[i][j].editable)
+                        txt_num = TTF_RenderText_Blended(font_numbers, str, color_blue);
+                    else
+                        txt_num = TTF_RenderText_Blended(font_numbers, str, color_black);
+                    //setting the number's position
+                    position_txt_num.x = position_first_case.x + i*btn_num->w + (btn_num->w - txt_num->w)/2;
+                    position_txt_num.y = position_first_case.y + j*btn_num->h + (btn_num->h - txt_num->h)/2;
 
-                //blitting the number
-                SDL_BlitSurface(txt_num , NULL, screen, &position_txt_num);
+                    //blitting the number
+                    SDL_BlitSurface(txt_num , NULL, screen, &position_txt_num);
 
-                //releasing memory occupied by that number
-                SDL_FreeSurface(txt_num);
+                    //releasing memory occupied by that number
+                    SDL_FreeSurface(txt_num);
 
+                }
             }
-        }
-        SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
-        SDL_BlitSurface(txt_save    , NULL, screen, &position_txt_save    );
-        SDL_BlitSurface(txt_verify  , NULL, screen, &position_txt_verify  );
-        if (notice) {
-            SDL_BlitSurface(txt_notice,NULL,screen,&position_txt_notice);
-            if (initial_time == 0)
-                initial_time = SDL_GetTicks();
-            if (time_elapsed(initial_time, 5000)){
-                SDL_FreeSurface(txt_notice);
-                notice = False;
-                initial_time = 0;
+            SDL_BlitSurface(txt_title   , NULL, screen, &position_txt_title   );
+            SDL_BlitSurface(txt_save    , NULL, screen, &position_txt_save    );
+            SDL_BlitSurface(txt_verify  , NULL, screen, &position_txt_verify  );
+            if (notice) {
+                SDL_BlitSurface(txt_notice,NULL,screen,&position_txt_notice);
+                if (initial_time == 0)
+                    initial_time = SDL_GetTicks();
+                if (time_elapsed(initial_time, 5000)){
+                    SDL_FreeSurface(txt_notice);
+                    notice = False;
+                    initial_time = 0;
+                }
             }
-        }
-        //blit the numbers
-        for(i=0; i<10 ; i++){
-            SDL_BlitSurface(btn_number[i]   , NULL, screen, &position_btn_number[i]);
-            SDL_BlitSurface(txt_number[i]   , NULL, screen, &position_txt_number[i]);
-        }
+            //blit the numbers
+            for(i=0; i<10 ; i++){
+                SDL_BlitSurface(btn_number[i]   , NULL, screen, &position_btn_number[i]);
+                SDL_BlitSurface(txt_number[i]   , NULL, screen, &position_txt_number[i]);
+            }
 
-        /**Update the screen **/
-        SDL_Flip(screen);
+            /**Update the screen **/
+            SDL_Flip(screen);
+        }
     }
 
     /**Free allocated memory**/
