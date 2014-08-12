@@ -21,6 +21,7 @@
 #include <SDL/SDL_ttf.h>
 #include "SDLgame.h"
 int in_surface(Uint16 x , Uint16 y , SDL_Surface* btn , SDL_Rect position);
+Boolean time_elapsed(int, int);
 #endif // USING_CONSOLE
 
 /**

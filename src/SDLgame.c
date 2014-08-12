@@ -351,7 +351,7 @@ void game (Grid * grid , SDL_Surface * screen){
     Coordinates coord;
     int number=0;
 
-    int selected_number = 0 , last_selected_number = 0;
+    int selected_number = 0 , last_selected_number = 0, initial_time = 0;
     SDL_Surface *bg_img, *btn, *btn_clicked, *btn_num, *btn_num_clicked, *btn_save, *btn_verify, *btn_number[10], *txt_title,\
                 *txt_save, *txt_verify, *txt_number[10], *txt_num, *txt_notice, *img_grid;
     SDL_Rect position, position_btn_save, position_btn_verify, position_btn_number[10], position_txt_title, position_selected,\
@@ -595,7 +595,13 @@ void game (Grid * grid , SDL_Surface * screen){
         SDL_BlitSurface(txt_verify  , NULL, screen, &position_txt_verify  );
         if (notice) {
             SDL_BlitSurface(txt_notice,NULL,screen,&position_txt_notice);
-            SDL_FreeSurface(txt_notice);
+            if (initial_time == 0)
+                initial_time = SDL_GetTicks();
+            if (time_elapsed(initial_time, 5000)){
+                SDL_FreeSurface(txt_notice);
+                notice = False;
+                initial_time = 0;
+            }
         }
         //blit the numbers
         for(i=0; i<10 ; i++){

@@ -1,0 +1,10 @@
+*~
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.lib
+*.a
+*.slo
+
