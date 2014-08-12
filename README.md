@@ -8,6 +8,7 @@ In order to build the project, you will need the following libraries :
 libsdl1.2-dev
 libsdl-image1.2-dev
 libsdl-ttf1.2-dev
+Windows users will need either cygwin or mingw
 
 ## Building :
 To build all run :
