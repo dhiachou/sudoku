@@ -15,7 +15,7 @@ $ make
 To build GUI only run :
 $ make sdl
 To build CLI only run :
-$ male console
+$ make console
 
 ## Usage:
 A partially completed 9x9 grid divided into nine 3x3 sub-grids (Squares) is provided to the player. The objective of the SUDOKU game is to fill in the rest of the Grid with digits so that each column, row and square contains all of the numbers 1 through 9. Three levels are available (easy, medium and hard).
