@@ -12,6 +12,13 @@
 #include <stdlib.h>
 #include "interface.h"
 
+#ifdef WIN32
+#define ICON_PATH "ressources/img/icon32.bmp"
+#elif defined __unix__
+#define ICON_PATH "ressources/img/icon100.bmp"
+#else
+//eror
+#endif // win32 favicon should be 32x32px
 
 int main() {
 	Grid grid ;
@@ -26,6 +33,7 @@ int main() {
     }
 
     /** Opening window**/
+    SDL_WM_SetIcon(SDL_LoadBMP(ICON_PATH), NULL);
     screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);  ///Load the window
     SDL_WM_SetCaption("Sudoku" , NULL);
 
